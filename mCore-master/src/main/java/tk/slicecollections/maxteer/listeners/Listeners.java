@@ -26,13 +26,10 @@ import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.enums.PrivateMessages;
 import tk.slicecollections.maxteer.player.enums.ProtectionLobby;
 import tk.slicecollections.maxteer.player.fake.FakeManager;
-import tk.slicecollections.maxteer.player.hotbar.HotbarButton;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.plugin.logger.MLogger;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.FieldAccessor;
-import tk.slicecollections.maxteer.titles.TitleManager;
-import tk.slicecollections.maxteer.utils.SliceUpdater;
 import tk.slicecollections.maxteer.utils.StringUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
 

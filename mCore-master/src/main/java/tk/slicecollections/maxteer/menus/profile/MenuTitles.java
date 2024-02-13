@@ -11,8 +11,6 @@ import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.libraries.menu.PagedPlayerMenu;
 import tk.slicecollections.maxteer.menus.MenuProfile;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.titles.Title;
-import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
 

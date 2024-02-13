@@ -41,5 +41,7 @@ roles:
   name: '&7Membro'
   prefix: '&7'
   permission: ''
-  # nao enviar avisos ao entrar no lobby
+  # Faz que não envie uma mensagem ao entrar no lobby
   broadcast: false
+  # Faz que o player não consiga voar
+  canFly: false

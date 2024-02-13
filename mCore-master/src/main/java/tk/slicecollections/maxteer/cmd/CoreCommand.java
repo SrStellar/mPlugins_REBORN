@@ -4,7 +4,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
-import tk.slicecollections.maxteer.utils.SliceUpdater;
 
 /**
  * @author Maxter

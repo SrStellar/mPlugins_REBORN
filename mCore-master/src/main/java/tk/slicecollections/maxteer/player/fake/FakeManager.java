@@ -48,7 +48,7 @@ public class FakeManager {
       FAKE_ROLES.addExtra(component);
     }
     for (String roleName : CONFIG.getStringList("fake.role")) {
-      Role role = Role.getRoleByName(roleName);
+      Role role = Role.findByName(roleName);
       if (role != null) {
         TextComponent component = new TextComponent("\n §0▪ " + role.getName());
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("§7Seu nickname será exibido como '" + role.getPrefix() + "Nickname'§7.")));
@@ -95,7 +95,7 @@ public class FakeManager {
       player.kickPlayer(StringUtils.formatColors(CONFIG.getString("fake.kick-apply")).replace("\\n", "\n"));
     }
     fakeNames.put(player.getName(), fakeName);
-    fakeRoles.put(player.getName(), Role.getRoleByName(role));
+    fakeRoles.put(player.getName(), Role.findByName(role));
     fakeSkins.put(player.getName(), skin);
   }
 
@@ -117,7 +117,7 @@ public class FakeManager {
   }
 
   public static Role getRole(String playerName) {
-    return fakeRoles.getOrDefault(playerName, Role.getLastRole());
+    return fakeRoles.getOrDefault(playerName, Role.getDefaultRole());
   }
 
   public static String getSkin(String playerName) {

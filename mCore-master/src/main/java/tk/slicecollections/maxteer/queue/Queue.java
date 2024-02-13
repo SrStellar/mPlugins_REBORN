@@ -73,7 +73,6 @@ public class Queue {
 
             if (!this.saving) {
               this.saving = true;
-              this.current.profile.saveSync();
               this.send = true;
             }
           }

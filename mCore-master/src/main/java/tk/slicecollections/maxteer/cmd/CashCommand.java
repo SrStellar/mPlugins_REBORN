@@ -2,8 +2,6 @@ package tk.slicecollections.maxteer.cmd;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tk.slicecollections.maxteer.cash.CashException;
-import tk.slicecollections.maxteer.cash.CashManager;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.utils.StringUtils;
 

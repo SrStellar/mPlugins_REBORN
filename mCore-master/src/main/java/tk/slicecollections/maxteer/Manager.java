@@ -2,6 +2,7 @@ package tk.slicecollections.maxteer;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import tk.slicecollections.maxteer.bungee.Bungee;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.MethodAccessor;
@@ -60,6 +61,15 @@ public class Manager {
         ex.printStackTrace();
       }
     }
+  }
+
+  public static void sendMessageToConsole(String message) {
+    if (BUNGEE) {
+      Bungee.getInstance().getLogger().info(message);
+      return;
+    }
+
+    Core.getInstance().getLogger().info(message);
   }
 
   public static void sendMessage(Object player, String message) {

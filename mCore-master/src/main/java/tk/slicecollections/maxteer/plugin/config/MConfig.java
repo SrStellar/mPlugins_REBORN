@@ -81,7 +81,16 @@ public class MConfig {
     return this.config.getDouble(path, def);
   }
 
+  public String getString(String path, String def) {
+    if (!contains(path)) {
+      return def;
+    }
+
+    return this.config.getString(path);
+  }
+
   public String getString(String path) {
+
     return this.config.getString(path);
   }
 

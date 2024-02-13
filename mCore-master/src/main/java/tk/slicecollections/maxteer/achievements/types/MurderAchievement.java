@@ -3,7 +3,6 @@ package tk.slicecollections.maxteer.achievements.types;
 import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.titles.Title;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.StringUtils;
 

@@ -13,7 +13,7 @@ import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.booster.Booster;
 import tk.slicecollections.maxteer.cmd.Commands;
 import tk.slicecollections.maxteer.database.Database;
-import tk.slicecollections.maxteer.deliveries.Delivery;
+import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.hook.MCoreExpansion;
 import tk.slicecollections.maxteer.hook.protocollib.FakeAdapter;
 import tk.slicecollections.maxteer.hook.protocollib.HologramAdapter;
@@ -31,9 +31,6 @@ import tk.slicecollections.maxteer.plugin.MPlugin;
 import tk.slicecollections.maxteer.plugin.config.MConfig;
 import tk.slicecollections.maxteer.queue.Queue;
 import tk.slicecollections.maxteer.queue.QueuePlayer;
-import tk.slicecollections.maxteer.servers.ServerItem;
-import tk.slicecollections.maxteer.titles.Title;
-import tk.slicecollections.maxteer.utils.SliceUpdater;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -124,29 +121,16 @@ public class Core extends MPlugin {
       return;
     }
 
-    PlaceholderAPI.registerExpansion(new MCoreExpansion());
+    setupRoles();
+    Database.setupDatabase(DataTypes.MYSQL);
 
-    Database.setupDatabase(
-      getConfig().getString("database.tipo"),
-      getConfig().getString("database.mysql.host"),
-      getConfig().getString("database.mysql.porta"),
-      getConfig().getString("database.mysql.nome"),
-      getConfig().getString("database.mysql.usuario"),
-      getConfig().getString("database.mysql.senha"),
-      getConfig().getBoolean("database.mysql.hikari",false),
-      getConfig().getBoolean("database.mysql.mariadb", false),
-      getConfig().getString("database.mongodb.url", "")
-    );
+    PlaceholderAPI.registerExpansion(new MCoreExpansion());
 
     NPCLibrary.setupNPCs(this);
     HologramLibrary.setupHolograms(this);
 
-    setupRoles();
     FakeManager.setupFake();
-    Title.setupTitles();
     Booster.setupBoosters();
-    Delivery.setupDeliveries();
-    ServerItem.setupServers();
     Achievement.setupAchievements();
 
     Commands.setupCommands();
@@ -160,55 +144,26 @@ public class Core extends MPlugin {
     getServer().getMessenger().registerOutgoingPluginChannel(this, "mCore");
     getServer().getMessenger().registerIncomingPluginChannel(this, "mCore", new PluginMessageListener());
 
-    Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> new SliceUpdater(this, 4).run());
-
-    validInit = true;
     this.getLogger().info("O plugin foi ativado.");
   }
 
   @Override
   public void disable() {
-    if (validInit) {
-      Bukkit.getOnlinePlayers().forEach(player -> {
-        Profile profile = Profile.unloadProfile(player.getName());
-        if (profile != null) {
-          profile.saveSync();
-          this.getLogger().info("Saved " + profile.getName() + "!");
-          profile.destroy();
-        }
-      });
-      Database.getInstance().close();
-    }
-
-    File update = new File("plugins/mCore/update", "mCore.jar");
-    if (update.exists()) {
-      try {
-        this.getFileUtils().deleteFile(new File("plugins/mCore.jar"));
-        this.getFileUtils().copyFile(new FileInputStream(update), new File("plugins/mCore.jar"));
-        this.getFileUtils().deleteFile(update.getParentFile());
-        this.getLogger().info("Update do mCore aplicada.");
-      } catch (Exception ex) {
-        ex.printStackTrace();
-      }
-    }
     this.getLogger().info("O plugin foi desativado.");
   }
 
   private void setupRoles() {
     MConfig config = getConfig("roles");
     for (String key : config.getSection("roles").getKeys(false)) {
-      String name = config.getString("roles." + key + ".name");
-      String prefix = config.getString("roles." + key + ".prefix");
-      String permission = config.getString("roles." + key + ".permission");
-      boolean broadcast = config.getBoolean("roles." + key + ".broadcast", true);
-      boolean alwaysVisible = config.getBoolean("roles." + key + ".alwaysvisible", false);
-
-      Role.listRoles().add(new Role(name, prefix, permission, alwaysVisible, broadcast));
+      String name = config.getString("roles." + key + ".name", "Membro");
+      String prefix = config.getString("roles." + key + ".prefix", "&7");
+      String permission = config.getString("roles." + key + ".permission", null);
+      Boolean alwaysVisible = config.getBoolean("roles." + key + ".alwaysvisible", false);
+      Boolean broadcast = config.getBoolean("roles." + key + ".broadcast", true);
+      Boolean fly = config.getBoolean("roles." + key + ".fly", true);
+      Role.listRoles().add(new Role((long) Role.listRoles().size(), name, prefix, permission, alwaysVisible, fly, broadcast));
     }
 
-    if (Role.listRoles().isEmpty()) {
-      Role.listRoles().add(new Role("&7Membro", "&7", "", false, false));
-    }
   }
 
   private static Location lobby;
@@ -230,7 +185,7 @@ public class Core extends MPlugin {
       return;
     }
 
-    Player player = profile.getPlayer();
+    Player player = null;
     if (player != null) {
       player.closeInventory();
       Queue queue = player.hasPermission("mcore.queue") ? Queue.VIP : Queue.MEMBER;

@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.data.container.DeliveriesContainer;
-import tk.slicecollections.maxteer.deliveries.Delivery;
 import tk.slicecollections.maxteer.libraries.menu.UpdatablePlayerMenu;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
