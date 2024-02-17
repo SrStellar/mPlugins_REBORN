@@ -1,13 +1,11 @@
 package tk.slicecollections.maxteer.listeners;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.ArmorStand;
@@ -17,20 +15,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.Manager;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.player.enums.PrivateMessages;
-import tk.slicecollections.maxteer.player.enums.ProtectionLobby;
+import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.fake.FakeManager;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.plugin.logger.MLogger;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.FieldAccessor;
 import tk.slicecollections.maxteer.utils.StringUtils;
-import tk.slicecollections.maxteer.utils.enums.EnumSound;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +62,7 @@ public class Listeners implements Listener {
   public void onPlayerLoginMonitor(PlayerLoginEvent evt) {
     Profile profile = Profile.loadProfile(evt.getPlayer().getName());
     if (profile == null) {
-      evt.disallow(PlayerLoginEvent.Result.KICK_OTHER,
-        " \n§cAparentemente o servidor não conseguiu carregar seu Perfil.\n \n§cIsso ocorre normalmente quando o servidor ainda está despreparado para receber logins, aguarde um pouco e tente novamente.");
+      evt.disallow(PlayerLoginEvent.Result.KICK_OTHER, " \n§cAparentemente o servidor não conseguiu carregar seu Perfil.\n \n§cIsso ocorre normalmente quando o servidor ainda está despreparado para receber logins, aguarde um pouco e tente novamente.");
       return;
     }
 
@@ -86,13 +80,12 @@ public class Listeners implements Listener {
         profile.getGame().leave(profile, profile.getGame());
       }
       if (!((CraftServer) Bukkit.getServer()).getHandle().getServer().isRunning() || RESTART_WATCHDOG_STOPPING.get(RESTART_WATCHDOG.get(null))) {
-        // server stopped - save SYNC
         profile.saveSync();
         Core.getInstance().getLogger().info("Saved " + profile.getName() + "!");
       } else {
-        // server running - save ASYNC
         profile.save();
       }
+
       profile.destroy();
     }
 
@@ -129,6 +122,8 @@ public class Listeners implements Listener {
         players.spigot().sendMessage(component);
       }
     });
+
+    Profile.loadProfile(player.getName()).loadPreferencesContainer();
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -145,6 +140,23 @@ public class Listeners implements Listener {
 
       if (args.length > 0) {
         String command = args[0];
+        if (COMMAND_MAP.get(SIMPLE_COMMAND_MAP).containsKey("lobby") && command.equals("lobby") && profile.loadPreferencesContainer().getPreference(PreferenceEnum.PROTECTION_LOBBY)) { //Verifica se a proteção de lobby está ativa
+          long last = PROTECTION_LOBBY.getOrDefault(player.getName().toLowerCase(), 0L);
+          if (last > System.currentTimeMillis()) {
+            PROTECTION_LOBBY.remove(player.getName().toLowerCase());
+            return;
+          }
+
+          evt.setCancelled(true);
+          PROTECTION_LOBBY.put(player.getName().toLowerCase(), System.currentTimeMillis() + 3000);
+            player.sendMessage("§aVocê tem certeza? Utilize /lobby novamente para voltar ao lobby.");
+        } else if (COMMAND_MAP.get(SIMPLE_COMMAND_MAP).containsKey("tell") && args.length > 1 && command.equals("tell") && !args[1].equalsIgnoreCase(player.getName())) {
+          profile = Profile.loadProfile(args[1]);
+          if (profile != null && !profile.loadPreferencesContainer().getPreference(PreferenceEnum.PRIVATE_MESSAGES)) { //Verifica se a mensagem previada está desativada para todos
+            evt.setCancelled(true);
+            player.sendMessage("§cEste usuário desativou as mensagens privadas.");
+          }
+        }
       }
     }
   }

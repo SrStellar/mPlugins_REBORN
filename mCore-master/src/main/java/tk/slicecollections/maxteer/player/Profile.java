@@ -11,11 +11,11 @@ import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
-import tk.slicecollections.maxteer.database.cache.interfaces.DataCacheInterface;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.game.Game;
 import tk.slicecollections.maxteer.game.GameTeam;
-import tk.slicecollections.maxteer.player.cash.CashManager;
+import tk.slicecollections.maxteer.cash.CashManager;
+import tk.slicecollections.maxteer.player.preferences.PreferencesContainer;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.player.scoreboard.MScoreboard;
 import tk.slicecollections.maxteer.utils.StringUtils;
@@ -55,7 +55,6 @@ public class Profile {
     }
 
     public static void destroy(Profile profile) {
-        profile.save();
         PROFILES.remove(profile.getName());
     }
 
@@ -78,12 +77,14 @@ public class Profile {
     private Player player;
 
     public void load() {
-        cache = new PlayerCache(this.name);
-        cache.setupDataCache();
+        this.cache = new PlayerCache(this.name);
+        this.cache.setupDataCache();
     }
 
     public void save() {
         this.cache.listDataCache().forEach(dataCache -> dataCache.saveValueCollections(true));
+        this.cache = null;
+
         if (this.lastHit != null && !this.lastHit.isEmpty()) {
             this.lastHit.clear();
             this.lastHit = null;
@@ -98,6 +99,8 @@ public class Profile {
 
     public void saveSync() {
         this.cache.listDataCache().forEach(dataCache -> dataCache.saveValueCollections(false));
+        this.cache = null;
+
         if (this.lastHit != null && !this.lastHit.isEmpty()) {
             this.lastHit.clear();
             this.lastHit = null;
@@ -215,4 +218,7 @@ public class Profile {
         return hitters;
     }
 
+    public PreferencesContainer loadPreferencesContainer() {
+        return new PreferencesContainer(this);
+    }
 }

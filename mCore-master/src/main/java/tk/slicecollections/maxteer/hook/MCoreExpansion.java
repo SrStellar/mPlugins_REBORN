@@ -4,9 +4,6 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.player.enums.PlayerVisibility;
-import tk.slicecollections.maxteer.player.role.Role;
-import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
 

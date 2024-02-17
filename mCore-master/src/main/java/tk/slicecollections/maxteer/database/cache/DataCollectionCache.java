@@ -45,10 +45,10 @@ public abstract class DataCollectionCache implements DataCollectionsCacheInterfa
     }
 
     public JSONArray getAsJsonArray() throws ParseException {
-        return (JSONArray) new JSONParser().parse(getAsString());
+        return (JSONArray) new JSONParser().parse(this.value.toString());
     }
 
     public JSONObject getAsJsonObject() throws ParseException {
-        return (JSONObject) new JSONParser().parse(getAsString());
+        return (JSONObject) new JSONParser().parse(this.value.toString());
     }
 }

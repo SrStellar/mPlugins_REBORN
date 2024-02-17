@@ -41,20 +41,17 @@ public class ProfileInformation extends DataCollectionCache {
 
     @Override
     public void saveValue() {
-        try {
-            DataTypes type = Database.getInstance().getType();
-            if (type.equals(DataTypes.MYSQL)) {
-                MySQL mySQL = ((MySQL) Database.getInstance());
-                System.out.println(this.getValue());
-                mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "name = '" + this.getPlayerKey() + "'");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        DataTypes type = Database.getInstance().getType();
+        if (type.equals(DataTypes.MYSQL)) {
+            MySQL mySQL = ((MySQL) Database.getInstance());
+            mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "name = '" + this.getPlayerKey() + "'");
         }
     }
 
     @SuppressWarnings("unchecked")
     public void updateValue(String key, Object value) throws ParseException {
-        getAsJsonObject().replace(key, value);
+        JSONObject newValue = getAsJsonObject();
+        newValue.put(key, value);
+        this.updateValue(newValue.toJSONString());
     }
 }

@@ -59,7 +59,6 @@ public class MySQL implements DatabaseInterface {
         Statement statement = null;
         StringBuilder builder = new StringBuilder();
         Arrays.stream(columns).forEach(column -> builder.append(column));
-        System.out.println("CREATE TABLE IF NOT EXISTS " + tableName + " (" + builder + ");");
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();

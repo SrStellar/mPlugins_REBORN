@@ -1,6 +1,7 @@
 package tk.slicecollections.maxteer;
 
 import com.comphenix.protocol.ProtocolLibrary;
+import lombok.Getter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ import tk.slicecollections.maxteer.plugin.MPlugin;
 import tk.slicecollections.maxteer.plugin.config.MConfig;
 import tk.slicecollections.maxteer.queue.Queue;
 import tk.slicecollections.maxteer.queue.QueuePlayer;
+import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -45,6 +47,7 @@ import java.util.logging.Level;
 @SuppressWarnings("unchecked")
 public class Core extends MPlugin {
 
+  @Getter
   private static Core instance;
   public static boolean validInit;
   public static final List<String> warnings = new ArrayList<>();
@@ -149,8 +152,8 @@ public class Core extends MPlugin {
   private void setupRoles() {
     MConfig config = getConfig("roles");
     for (String key : config.getSection("roles").getKeys(false)) {
-      String name = config.getString("roles." + key + ".name", "Membro");
-      String prefix = config.getString("roles." + key + ".prefix", "&7");
+      String name = StringUtils.formatColors(config.getString("roles." + key + ".name", "&7Membro"));
+      String prefix = StringUtils.formatColors(config.getString("roles." + key + ".prefix", "&7"));
       String permission = config.getString("roles." + key + ".permission", null);
       Boolean alwaysVisible = config.getBoolean("roles." + key + ".alwaysvisible", false);
       Boolean broadcast = config.getBoolean("roles." + key + ".broadcast", true);
@@ -160,18 +163,11 @@ public class Core extends MPlugin {
 
   }
 
+  @Getter
   private static Location lobby;
 
   public static void setLobby(Location location) {
     lobby = location;
-  }
-
-  public static Location getLobby() {
-    return lobby;
-  }
-
-  public static Core getInstance() {
-    return instance;
   }
 
   public static void sendServer(Profile profile, String name) {
