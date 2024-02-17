@@ -41,7 +41,7 @@ public class Profile {
     }
 
     public static Profile loadProfile(String name) {
-        if (PROFILES.containsKey(name)) {
+        if (!PROFILES.containsKey(name)) {
             return null;
         }
 
@@ -74,7 +74,7 @@ public class Profile {
     private MScoreboard scoreboard;
 
     private Game<? extends GameTeam> game;
-    private final Map<String, Long> lastHit = new HashMap<>();
+    private Map<String, Long> lastHit = new HashMap<>();
     private Player player;
 
     public void load() {
@@ -83,8 +83,31 @@ public class Profile {
     }
 
     public void save() {
-        cache.listDataCache().forEach(DataCacheInterface::saveValueCollections);
-        cache = null;
+        this.cache.listDataCache().forEach(dataCache -> dataCache.saveValueCollections(true));
+        if (this.lastHit != null && !this.lastHit.isEmpty()) {
+            this.lastHit.clear();
+            this.lastHit = null;
+        }
+
+        this.game = null;
+        if (this.scoreboard != null) {
+            this.scoreboard.destroy();
+            this.scoreboard = null;
+        }
+    }
+
+    public void saveSync() {
+        this.cache.listDataCache().forEach(dataCache -> dataCache.saveValueCollections(false));
+        if (this.lastHit != null && !this.lastHit.isEmpty()) {
+            this.lastHit.clear();
+            this.lastHit = null;
+        }
+
+        this.game = null;
+        if (this.scoreboard != null) {
+            this.scoreboard.destroy();
+            this.scoreboard = null;
+        }
     }
 
     public CashManager getCashManager() {
@@ -109,6 +132,10 @@ public class Profile {
 
     public void update() {
         this.scoreboard.update();
+    }
+
+    public void destroy() {
+        destroy(this);
     }
 
     public void refresh() {

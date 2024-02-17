@@ -1,5 +1,9 @@
 package tk.slicecollections.maxteer.database.cache.types;
 
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCache;
 import tk.slicecollections.maxteer.database.cache.DataCollectionCache;
@@ -24,12 +28,12 @@ public class ProfileCache extends DataCache {
     public DataCache setupTables() {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
-            ((MySQL) Database.getInstance()).setupTable(this.tableName, "name VARCHAR(32) PRIMARY KEY, ",
-                    "informations TEXT",
-                    "titles VARCHAR(255)",
-                    "boosters VARCHAR(255)",
-                    "achievements VARCHAR(255)",
-                    "selected VARCHAR(255)");
+            ((MySQL) Database.getInstance()).setupTable(this.tableName, "`name` VARCHAR(32) PRIMARY KEY NOT NULL, ",
+                    "`informations` TEXT, ",
+                    "`titles` VARCHAR(255), ",
+                    "`boosters` VARCHAR(255), ",
+                    "`achievements` VARCHAR(255), ",
+                    "`selected` VARCHAR(255)");
         }
 
         return this;
@@ -54,34 +58,52 @@ public class ProfileCache extends DataCache {
             return;
         }
 
-        loadValueCollections();
+        loadValueCollections(true);
     }
 
     @Override
-    public void loadValueCollections() {
-        Map<String, Object> collectionsValue;
+    public void loadValueCollections(boolean asyncTask) {
         DataTypes type = Database.getInstance().getType();
-        if (type.equals(DataTypes.MYSQL)) {
-            MySQL mySQL = ((MySQL) Database.getInstance());
-            List<String> columns = listCollections().stream().map(DataCollectionCache::getColumnName).collect(Collectors.toList());
-            collectionsValue = mySQL.getValueColumn(this.tableName, this.playerKey, columns);
-        } else {
-            collectionsValue = null;
-        }
+        Runnable task = ()-> listCollections().forEach(collectionCache -> {
+            Map<String, Object> collectionsValue;
+            if (type.equals(DataTypes.MYSQL)) {
+                MySQL mySQL = ((MySQL) Database.getInstance());
+                List<String> columns = listCollections().stream().map(DataCollectionCache::getColumnName).collect(Collectors.toList());
+                collectionsValue = mySQL.getValueColumn(this.tableName, "name = '" + this.playerKey + "'", columns);
+                if (collectionsValue == null || collectionsValue.isEmpty()) {
+                    mySQL.insertValue(this.tableName, "name", this.playerKey);
+                }
+            } else {
+                collectionsValue = null;
+            }
 
-        listCollections().forEach(collectionCache -> {
-            if (collectionsValue != null) {
+            if (collectionsValue != null && !collectionsValue.isEmpty()) {
                 collectionCache.updateValue(collectionsValue.get(collectionCache.getColumnName()));
                 return;
             }
 
+
             collectionCache.updateValue(collectionCache.getDefaultValue());
         });
+
+        if (asyncTask) {
+            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+        } else {
+            Bukkit.getScheduler().runTask(Core.getInstance(), task);
+        }
     }
 
     @Override
-    public void saveValueCollections() {
-        listCollections().forEach(DataCollectionsCacheInterface::saveValue);
+    public void saveValueCollections(boolean asyncTask) {
+        Runnable task = ()-> listCollections().forEach(collectionCache -> {
+            listCollections().forEach(DataCollectionsCacheInterface::saveValue);
+        });
+
+        if (asyncTask) {
+            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+        } else {
+            Bukkit.getScheduler().runTask(Core.getInstance(), task);
+        }
     }
 
 }

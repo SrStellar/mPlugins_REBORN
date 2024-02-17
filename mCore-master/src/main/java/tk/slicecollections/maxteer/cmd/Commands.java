@@ -36,13 +36,5 @@ public abstract class Commands extends Command {
   }
 
   public static void setupCommands() {
-    new CoreCommand();
-    if (CashManager.CASH) {
-      new CashCommand();
-    }
-    if (!FakeManager.isBungeeSide()) {
-      new FakeCommand();
-      new PartyCommand();
-    }
   }
 }

@@ -16,7 +16,6 @@ public class ProfileChangePlayerVisibilityEvent extends Event {
   
   public ProfileChangePlayerVisibilityEvent(Profile profile) {
     this.profile = profile;
-    this.playerVisibility = profile.getPreferencesContainer().getPlayerVisibility();
   }
   
   public Player getPlayer() {

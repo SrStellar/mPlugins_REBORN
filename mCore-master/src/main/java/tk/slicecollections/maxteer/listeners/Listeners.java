@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.Manager;
-import tk.slicecollections.maxteer.database.exception.ProfileLoadException;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.enums.PrivateMessages;
 import tk.slicecollections.maxteer.player.enums.ProtectionLobby;
@@ -57,8 +56,8 @@ public class Listeners implements Listener {
   public void onAsyncPlayerPreLogin(AsyncPlayerPreLoginEvent evt) {
     if (evt.getLoginResult() == AsyncPlayerPreLoginEvent.Result.ALLOWED) {
       try {
-        Profile.createOrLoadProfile(evt.getName());
-      } catch (ProfileLoadException ex) {
+        Profile.createProfile(evt.getName());
+      } catch (Exception ex) {
         LOGGER.log(Level.SEVERE, "Nao foi possível carregar os dados do perfil \"" + evt.getName() + "\": ", ex);
       }
     }
@@ -66,7 +65,7 @@ public class Listeners implements Listener {
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerLoginMonitor(PlayerLoginEvent evt) {
-    Profile profile = Profile.getProfile(evt.getPlayer().getName());
+    Profile profile = Profile.loadProfile(evt.getPlayer().getName());
     if (profile == null) {
       evt.disallow(PlayerLoginEvent.Result.KICK_OTHER,
         " \n§cAparentemente o servidor não conseguiu carregar seu Perfil.\n \n§cIsso ocorre normalmente quando o servidor ainda está despreparado para receber logins, aguarde um pouco e tente novamente.");
@@ -76,42 +75,16 @@ public class Listeners implements Listener {
     profile.setPlayer(evt.getPlayer());
   }
 
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onPlayerJoin(PlayerJoinEvent evt) {
-    Player player = evt.getPlayer();
-    if (player.hasPermission("mcore.admin")) {
-      if (SliceUpdater.UPDATER != null && SliceUpdater.UPDATER.canDownload) {
-        TextComponent component = new TextComponent("");
-        for (BaseComponent components : TextComponent.fromLegacyText(" \n §6§l[MCORE]\n \n §7O mCore possui uma nova atualização para ser feita, para prosseguir basta clicar ")) {
-          component.addExtra(components);
-        }
-        TextComponent click = new TextComponent("AQUI");
-        click.setColor(ChatColor.GREEN);
-        click.setBold(true);
-        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mc atualizar"));
-        click.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("§7Clique aqui para atualizar o mCore.")));
-        component.addExtra(click);
-        for (BaseComponent components : TextComponent.fromLegacyText("§7.\n ")) {
-          component.addExtra(components);
-        }
-
-        player.spigot().sendMessage(component);
-        EnumSound.LEVEL_UP.play(player, 1.0F, 1.0F);
-      }
-    }
-  }
-
   private static final FieldAccessor<WatchdogThread> RESTART_WATCHDOG = Accessors.getField(WatchdogThread.class, "instance", WatchdogThread.class);
   private static final FieldAccessor<Boolean> RESTART_WATCHDOG_STOPPING = Accessors.getField(WatchdogThread.class, "stopping", boolean.class);
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerQuit(PlayerQuitEvent evt) {
-    Profile profile = Profile.unloadProfile(evt.getPlayer().getName());
+    Profile profile = Profile.loadProfile(evt.getPlayer().getName());
     if (profile != null) {
       if (profile.getGame() != null) {
         profile.getGame().leave(profile, profile.getGame());
       }
-      TitleManager.leaveServer(profile);
       if (!((CraftServer) Bukkit.getServer()).getHandle().getServer().isRunning() || RESTART_WATCHDOG_STOPPING.get(RESTART_WATCHDOG.get(null))) {
         // server stopped - save SYNC
         profile.saveSync();
@@ -141,7 +114,7 @@ public class Listeners implements Listener {
     String format = String.format(evt.getFormat(), player.getName(), evt.getMessage());
 
     String current = Manager.getCurrent(player.getName());
-    Role role = Role.getPlayerRole(player);
+    Role role = Role.findRoleByPermission(player);
     TextComponent component = new TextComponent("");
     for (BaseComponent components : TextComponent.fromLegacyText(format)) {
       component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + current + " "));
@@ -165,31 +138,13 @@ public class Listeners implements Listener {
     }
 
     Player player = evt.getPlayer();
-    Profile profile = Profile.getProfile(player.getName());
+    Profile profile = Profile.loadProfile(player.getName());
 
     if (profile != null) {
       String[] args = evt.getMessage().replace("/", "").split(" ");
 
       if (args.length > 0) {
         String command = args[0];
-        if (COMMAND_MAP.get(SIMPLE_COMMAND_MAP).containsKey("lobby") && command.equals("lobby") && profile.getPreferencesContainer()
-          .getProtectionLobby() == ProtectionLobby.ATIVADO) {
-          long last = PROTECTION_LOBBY.getOrDefault(player.getName().toLowerCase(), 0L);
-          if (last > System.currentTimeMillis()) {
-            PROTECTION_LOBBY.remove(player.getName().toLowerCase());
-            return;
-          }
-
-          evt.setCancelled(true);
-          PROTECTION_LOBBY.put(player.getName().toLowerCase(), System.currentTimeMillis() + 3000);
-          player.sendMessage("§aVocê tem certeza? Utilize /lobby novamente para voltar ao lobby.");
-        } else if (COMMAND_MAP.get(SIMPLE_COMMAND_MAP).containsKey("tell") && args.length > 1 && command.equals("tell") && !args[1].equalsIgnoreCase(player.getName())) {
-          profile = Profile.getProfile(args[1]);
-          if (profile != null && profile.getPreferencesContainer().getPrivateMessages() != PrivateMessages.TODOS) {
-            evt.setCancelled(true);
-            player.sendMessage("§cEste usuário desativou as mensagens privadas.");
-          }
-        }
       }
     }
   }
@@ -197,18 +152,7 @@ public class Listeners implements Listener {
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent evt) {
     Player player = evt.getPlayer();
-    Profile profile = Profile.getProfile(player.getName());
-
-    if (profile != null && profile.getHotbar() != null) {
-      ItemStack item = player.getItemInHand();
-      if (evt.getAction().name().contains("CLICK") && item != null && item.hasItemMeta()) {
-        HotbarButton button = profile.getHotbar().compareButton(player, item);
-        if (button != null) {
-          evt.setCancelled(true);
-          button.getAction().execute(profile);
-        }
-      }
-    }
+    Profile profile = Profile.loadProfile(player.getName());
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
@@ -224,20 +168,7 @@ public class Listeners implements Listener {
   public void onInventoryClick(InventoryClickEvent evt) {
     if (evt.getWhoClicked() instanceof Player) {
       Player player = (Player) evt.getWhoClicked();
-      Profile profile = Profile.getProfile(player.getName());
-
-      if (profile != null && profile.getHotbar() != null) {
-        ItemStack item = evt.getCurrentItem();
-        if (item != null && item.getType() != Material.AIR) {
-          if (evt.getClickedInventory() != null && evt.getClickedInventory().equals(player.getInventory()) && item.hasItemMeta()) {
-            HotbarButton button = profile.getHotbar().compareButton(player, item);
-            if (button != null) {
-              evt.setCancelled(true);
-              button.getAction().execute(profile);
-            }
-          }
-        }
-      }
+      Profile profile = Profile.loadProfile(player.getName());
     }
   }
 }

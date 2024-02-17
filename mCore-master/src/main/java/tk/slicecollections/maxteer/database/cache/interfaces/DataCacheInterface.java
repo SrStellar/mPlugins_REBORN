@@ -7,6 +7,6 @@ public interface DataCacheInterface {
 
     DataCache setupTables();
     void setupCollections(Class<? extends DataCollectionCache>... collections);
-    void loadValueCollections();
-    void saveValueCollections();
+    void loadValueCollections(boolean asyncTask);
+    void saveValueCollections(boolean asyncTask);
 }

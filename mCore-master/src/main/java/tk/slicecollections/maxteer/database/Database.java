@@ -12,15 +12,15 @@ public class Database {
     private static DatabaseInterface instance;
 
     public static void setupDatabase(DataTypes types, String... configs) {
-        if (types.equals(DataTypes.MYSQL)) {
-            instance = new MySQL(configs[0], configs[1], configs[2], configs[3]);
-        }
-
         try {
+            if (types.equals(DataTypes.MYSQL)) {
+                instance = new MySQL(configs[0], configs[1], configs[2], configs[3]);
+            }
             instance.setupConnection();
         } catch (Exception e) {
             Manager.sendMessageToConsole("§4Ocorreu um erro enquanto nós conectavamos ao database...");
             e.printStackTrace();
+            System.exit(0);
         }
     }
 

@@ -8,6 +8,8 @@ import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RequiredArgsConstructor
 public abstract class DataCache implements DataCacheInterface {

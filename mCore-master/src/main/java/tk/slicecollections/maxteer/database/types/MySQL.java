@@ -2,7 +2,6 @@ package tk.slicecollections.maxteer.database.types;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -59,7 +58,8 @@ public class MySQL implements DatabaseInterface {
     public void setupTable(String tableName, String... columns) {
         Statement statement = null;
         StringBuilder builder = new StringBuilder();
-        Arrays.stream(columns).forEach(column -> builder.append(column).append(", "));
+        Arrays.stream(columns).forEach(column -> builder.append(column));
+        System.out.println("CREATE TABLE IF NOT EXISTS " + tableName + " (" + builder + ");");
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
@@ -82,7 +82,7 @@ public class MySQL implements DatabaseInterface {
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
-            statement.executeUpdate("ALTER TABLE IF NOT EXISTS " + tableName + " ADD " + column + ";");
+            statement.executeUpdate("ALTER TABLE " + tableName + " ADD COLUMN " + column + ";");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -100,8 +100,8 @@ public class MySQL implements DatabaseInterface {
         PreparedStatement statement = null;
         try {
             Connection newConnection = openConnection();
-            statement = newConnection.prepareStatement("UPDATE " + tableName + " SET " + column + " = ? WHERE " + conditions + ";");
-            statement.setObject(1, value);
+            statement = newConnection.prepareStatement("UPDATE " + tableName + " SET " + column + " = '" + value + "' WHERE " + conditions + ";");
+            statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -122,7 +122,7 @@ public class MySQL implements DatabaseInterface {
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT " + column + " FROM " + tableName + " WHERE " + conditions + ";");
+            resultSet = statement.executeQuery("SELECT * FROM " + tableName + " WHERE " + conditions + ";");
             while (resultSet.next()) {
                 value = resultSet.getObject(column);
             }
@@ -150,14 +150,15 @@ public class MySQL implements DatabaseInterface {
         ResultSet resultSet = null;
         Map<String, Object> value = new HashMap<>();
         StringBuilder builder = new StringBuilder();
-        Arrays.stream(columns).forEach(column -> builder.append(column).append(", "));
+        Arrays.stream(columns).forEach(column -> builder.append(column));
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT " + builder + " FROM " + tableName + " WHERE " + conditions + ";");
-            int index = 1;
+            resultSet = statement.executeQuery("SELECT * FROM " + tableName + " WHERE " + conditions + ";");
+            int index = 0;
             while (resultSet.next()) {
-                value.put(columns[index - 1], resultSet.getObject(1));
+                String column = columns[index];
+                value.put(column, resultSet.getObject(column));
                 index++;
             }
         } catch (Exception e) {
@@ -179,19 +180,20 @@ public class MySQL implements DatabaseInterface {
         return value;
     }
 
-    public Map<String, Object> getValueColumn(String tableName, String conditions, List<String> columns) {
+    public Map<String, Object> getValueColumn(String tableName, String condition, List<String> columns) {
         Statement statement = null;
         ResultSet resultSet = null;
         Map<String, Object> value = new HashMap<>();
         StringBuilder builder = new StringBuilder();
-        columns.forEach(column -> builder.append(column).append(", "));
+        columns.forEach(column -> builder.append(column));
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
-            resultSet = statement.executeQuery("SELECT " + builder + " FROM " + tableName + " WHERE " + conditions + ";");
-            int index = 1;
+            resultSet = statement.executeQuery("SELECT * FROM " + tableName + " WHERE " + condition + ";");
+            int index = 0;
             while (resultSet.next()) {
-                value.put(columns.get(index - 1), resultSet.getObject(1));
+                String column = columns.get(index);
+                value.put(column, resultSet.getString(column));
                 index++;
             }
         } catch (Exception e) {
@@ -220,9 +222,10 @@ public class MySQL implements DatabaseInterface {
             Connection newConnection = openConnection();
             statement = newConnection.prepareStatement("SELECT " + column + " FROM " + table + ";");
             resultSet = statement.executeQuery();
-            return resultSet.next();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
             try {
                 if (statement != null) {
@@ -236,8 +239,82 @@ public class MySQL implements DatabaseInterface {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public boolean existsValueInColumn(String table, String column, String conditional, Object value) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Connection newConnection = openConnection();
+            statement = newConnection.prepareStatement("SELECT * FROM " + table + " WHERE " + column + " " + conditional + " " + value + ";");
+            resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         return false;
+    }
+
+    public void insertValues(String table, Map<String, Object> columnsAndValues) {
+        PreparedStatement statement = null;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < columnsAndValues.size(); i++) {
+            builder.append("?").append((i == columnsAndValues.size() - 1) ? "" : ", ");
+        }
+
+        try {
+            Connection newConnection = openConnection();
+            statement = newConnection.prepareStatement("INSERT INTO " + table + " VALUES(" + builder.toString() + ");");
+            int index = 1;
+            for (String column : columnsAndValues.keySet()) {
+                statement.setObject(index, columnsAndValues.get(column));
+            }
+
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public void insertValue(String table, String column, Object value) {
+        PreparedStatement statement = null;
+        try {
+            Connection newConnection = openConnection();
+            statement = newConnection.prepareStatement("INSERT INTO " + table + "(" + column + ") VALUES('" + value + "');");
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @SneakyThrows

@@ -52,7 +52,7 @@ public abstract class Party {
   }
 
   public void invite(Object target) {
-    String leader = Role.getPrefixed(this.getLeader());
+    String leader = "Role.getPrefixed(this.getLeader())";
     this.invitesMap.put(Manager.getName(target).toLowerCase(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(MINUTES_UNTIL_EXPIRE_INVITE));
     BaseComponent component = new TextComponent("");
     for (BaseComponent components : TextComponent.fromLegacyText(" \n" + leader + " §aconvidou você para a Party dele!\n§7Você pode ")) {
@@ -82,11 +82,11 @@ public abstract class Party {
 
   public void reject(String member) {
     this.invitesMap.remove(member.toLowerCase());
-    this.leader.sendMessage(" \n" + Role.getPrefixed(member) + " §anegou seu convite de Party!\n ");
+
   }
 
   public void join(String member) {
-    this.broadcast(" \n" + Role.getPrefixed(member) + " §aentrou na Party!\n ");
+
     this.members.add(new PartyPlayer(member, MEMBER));
     this.invitesMap.remove(member.toLowerCase());
   }
@@ -99,18 +99,11 @@ public abstract class Party {
       return;
     }
 
-    String prefixed = Role.getPrefixed(member);
-    if (leader.equals(member)) {
-      this.leader = this.members.get(0);
-      this.leader.setRole(LEADER);
-      this.broadcast(" \n" + prefixed + " §ase tornou o novo Líder da Party!\n ");
-    }
-    this.broadcast(" \n" + prefixed + " §asaiu da Party!\n ");
+
   }
 
   public void kick(String member) {
     this.members.stream().filter(pp -> pp.getName().equalsIgnoreCase(member)).findFirst().ifPresent(pp -> {
-      pp.sendMessage(" \n" + Role.getPrefixed(this.getLeader()) + " §aexpulsou você da Party!\n ");
       this.members.removeIf(pap -> pap.equals(pp));
     });
   }

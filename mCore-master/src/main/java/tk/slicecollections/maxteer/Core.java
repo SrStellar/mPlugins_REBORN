@@ -9,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
-import tk.slicecollections.maxteer.achievements.Achievement;
-import tk.slicecollections.maxteer.booster.Booster;
 import tk.slicecollections.maxteer.cmd.Commands;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
@@ -59,7 +57,9 @@ public class Core extends MPlugin {
   }
 
   @Override
-  public void load() {}
+  public void load() {
+    saveDefaultConfig();
+  }
 
   @Override
   public void enable() {
@@ -69,7 +69,6 @@ public class Core extends MPlugin {
       return;
     }
 
-    saveDefaultConfig();
     lobby = Bukkit.getWorlds().get(0).getSpawnLocation();
 
     // Remover o spawn-protection-size
@@ -115,23 +114,18 @@ public class Core extends MPlugin {
       getLogger().log(Level.SEVERE, "Cannot remove reload command: ", ex);
     }
 
-    if (!PlaceholderAPIPlugin.getInstance().getDescription().getVersion().equals("2.10.5")) {
-      Bukkit.getConsoleSender().sendMessage(" \n §6§lAVISO IMPORTANTE\n \n §7Utilize a versão 2.10.5 do PlaceHolderAPI, você está utilizando a v" + PlaceholderAPIPlugin.getInstance().getDescription().getVersion() + "\n ");
-      System.exit(0);
-      return;
-    }
-
     setupRoles();
-    Database.setupDatabase(DataTypes.MYSQL);
+    Database.setupDatabase(DataTypes.MYSQL, this.getConfig().getString("database.mysql.nome"),
+            this.getConfig().getString("database.mysql.usuario"),
+            this.getConfig().getString("database.mysql.senha"),
+            this.getConfig().getString("database.mysql.host") + ":" +this.getConfig().getString("database.mysql.porta"));
 
-    PlaceholderAPI.registerExpansion(new MCoreExpansion());
+    new MCoreExpansion().register();
 
     NPCLibrary.setupNPCs(this);
     HologramLibrary.setupHolograms(this);
 
     FakeManager.setupFake();
-    Booster.setupBoosters();
-    Achievement.setupAchievements();
 
     Commands.setupCommands();
     Listeners.setupListeners();

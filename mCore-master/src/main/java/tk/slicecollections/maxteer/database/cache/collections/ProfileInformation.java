@@ -20,8 +20,8 @@ public class ProfileInformation extends DataCollectionCache {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            if (!mySQL.existsColumn("informations", "mCoreProfile")) {
-                mySQL.addColumn("informations", "mCoreProfile");
+            if (!mySQL.existsColumn("mCoreProfile", "informations")) {
+                mySQL.addColumn("mCoreProfile", "informations");
             }
         }
     }
@@ -41,10 +41,15 @@ public class ProfileInformation extends DataCollectionCache {
 
     @Override
     public void saveValue() {
-        DataTypes type = Database.getInstance().getType();
-        if (type.equals(DataTypes.MYSQL)) {
-            MySQL mySQL = ((MySQL) Database.getInstance());
-            mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "WHERE name = " + this.getPlayerKey());
+        try {
+            DataTypes type = Database.getInstance().getType();
+            if (type.equals(DataTypes.MYSQL)) {
+                MySQL mySQL = ((MySQL) Database.getInstance());
+                System.out.println(this.getValue());
+                mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "name = '" + this.getPlayerKey() + "'");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
