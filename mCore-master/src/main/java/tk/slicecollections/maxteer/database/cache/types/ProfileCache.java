@@ -1,13 +1,13 @@
 package tk.slicecollections.maxteer.database.cache.types;
 
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCache;
 import tk.slicecollections.maxteer.database.cache.DataCollectionCache;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
+import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
+import tk.slicecollections.maxteer.database.cache.collections.TitleInformation;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsCacheInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
@@ -21,7 +21,8 @@ public class ProfileCache extends DataCache {
 
     public ProfileCache(String playerKey) {
         super("mCoreProfile", playerKey);
-        setupCollections(ProfileInformation.class);
+        setupTables();
+        setupCollections(ProfileInformation.class, SelectedInformation.class, TitleInformation.class);
     }
 
     @Override
@@ -58,51 +59,51 @@ public class ProfileCache extends DataCache {
             return;
         }
 
-        loadValueCollections(true);
+        loadValueCollections(false);
     }
 
     @Override
     public void loadValueCollections(boolean asyncTask) {
-        DataTypes type = Database.getInstance().getType();
-        Runnable task = ()-> listCollections().forEach(collectionCache -> {
+        Runnable task = () -> {
+            DataTypes type = Database.getInstance().getType();
             Map<String, Object> collectionsValue;
             if (type.equals(DataTypes.MYSQL)) {
                 MySQL mySQL = ((MySQL) Database.getInstance());
                 List<String> columns = listCollections().stream().map(DataCollectionCache::getColumnName).collect(Collectors.toList());
                 collectionsValue = mySQL.getValueColumn(this.tableName, "name = '" + this.playerKey + "'", columns);
-                if (collectionsValue == null || collectionsValue.isEmpty()) {
+                if (collectionsValue.isEmpty()) {
                     mySQL.insertValue(this.tableName, "name", this.playerKey);
                 }
             } else {
                 collectionsValue = null;
             }
 
-            if (collectionsValue != null && !collectionsValue.isEmpty()) {
-                collectionCache.updateValue(collectionsValue.get(collectionCache.getColumnName()));
-                return;
-            }
+            listCollections().forEach(collectionCache -> {
+                if (collectionsValue != null && !collectionsValue.isEmpty() && collectionsValue.get(collectionCache.getColumnName()) != null) {
+                    collectionCache.updateValue(collectionsValue.get(collectionCache.getColumnName()));
+                    return;
+                }
 
+                collectionCache.updateValue(collectionCache.getDefaultValue());
+            });
+        };
 
-            collectionCache.updateValue(collectionCache.getDefaultValue());
-        });
 
         if (asyncTask) {
             Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
         } else {
-            Bukkit.getScheduler().runTask(Core.getInstance(), task);
+            task.run();
         }
     }
 
     @Override
     public void saveValueCollections(boolean asyncTask) {
-        Runnable task = ()-> listCollections().forEach(collectionCache -> {
-            listCollections().forEach(DataCollectionsCacheInterface::saveValue);
-        });
+        Runnable task = ()-> listCollections().forEach(collectionCache -> listCollections().forEach(DataCollectionsCacheInterface::saveValue));
 
         if (asyncTask) {
             Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
         } else {
-            Bukkit.getScheduler().runTask(Core.getInstance(), task);
+            task.run();
         }
     }
 

@@ -8,6 +8,7 @@ import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author oJVzinn
@@ -32,6 +33,14 @@ public class Role {
 
   public static Role findByName(String roleName) {
     return ROLES.stream().filter(role -> StringUtils.stripColors(role.getName()).equalsIgnoreCase(roleName)).findFirst().orElse(getDefaultRole());
+  }
+
+  public static Role findByPermission(String permission) {
+    return ROLES.stream().filter(role -> role.getPermission().equals(permission)).findFirst().orElse(null);
+  }
+
+  public static List<Role> loadAllRoles(Player player) {
+    return ROLES.stream().filter(role -> role.getPermission() == null || player.hasPermission(role.getPermission())).collect(Collectors.toList());
   }
 
   private Long id;

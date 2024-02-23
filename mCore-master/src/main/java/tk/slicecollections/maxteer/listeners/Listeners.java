@@ -1,5 +1,6 @@
 package tk.slicecollections.maxteer.listeners;
 
+import lombok.SneakyThrows;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -15,9 +16,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.json.simple.parser.ParseException;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.Manager;
+import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
+import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
+import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.fake.FakeManager;
@@ -25,10 +30,13 @@ import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.plugin.logger.MLogger;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.FieldAccessor;
+import tk.slicecollections.maxteer.titles.TitleController;
+import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 
 /**
@@ -76,12 +84,17 @@ public class Listeners implements Listener {
   public void onPlayerQuit(PlayerQuitEvent evt) {
     Profile profile = Profile.loadProfile(evt.getPlayer().getName());
     if (profile != null) {
+      try {
+        profile.getCache().loadTableCache(ProfileCache.class).loadCollection(SelectedInformation.class).getSelectedTitle();
+      } catch (ParseException e) {
+        throw new RuntimeException(e);
+      }
+      TitleManager.leaveServer(profile);
       if (profile.getGame() != null) {
         profile.getGame().leave(profile, profile.getGame());
       }
       if (!((CraftServer) Bukkit.getServer()).getHandle().getServer().isRunning() || RESTART_WATCHDOG_STOPPING.get(RESTART_WATCHDOG.get(null))) {
         profile.saveSync();
-        Core.getInstance().getLogger().info("Saved " + profile.getName() + "!");
       } else {
         profile.save();
       }
@@ -94,6 +107,20 @@ public class Listeners implements Listener {
     FakeManager.fakeSkins.remove(evt.getPlayer().getName());
     DELAY_PLAYERS.remove(evt.getPlayer().getName());
     PROTECTION_LOBBY.remove(evt.getPlayer().getName().toLowerCase());
+  }
+
+  @SneakyThrows
+  @EventHandler
+  public void teste(PlayerJoinEvent event) {
+    Profile profile = Profile.loadProfile(event.getPlayer().getName());
+    if (profile != null) {
+      ProfileInformation information = profile.getCache().loadTableCache(ProfileCache.class).loadCollection(ProfileInformation.class);
+      if (information.getAsJsonObject().get("created").toString().isEmpty()) {
+        information.updateValue("created", System.currentTimeMillis());
+      }
+
+      information.updateValue("lastLogin", System.currentTimeMillis());
+    }
   }
 
   @EventHandler(priority = EventPriority.MONITOR)

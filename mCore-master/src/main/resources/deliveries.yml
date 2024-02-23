@@ -18,7 +18,7 @@ deliveries:
   lcvip:
     slot: 12
     days: 30
-    permission: 'role.vip'
+    role: 'VIP' #role baseado no que foi colocado no nome, sem as cores
     icon: 'SKULL_ITEM:3 : 5 : nome>{color}5 Caixas de Saque : skin>eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWMxNzc4N2QwNjQ4NWNjOWUxOWNjY2FmM2ZiNTk3YzBlZTM2MGFkZDU5ZDI0M2M2ZmVhZDUzZTBhNDY5YmYyZiJ9fX0= : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos'
     message: '&aVocê coletou sua entrega mensal de 5 Caixas de Saque!'
     rewards:
@@ -26,7 +26,7 @@ deliveries:
   lcmvp:
     slot: 13
     days: 30
-    permission: 'role.mvp'
+    role: 'MVP'
     icon: 'SKULL_ITEM:3 : 10 : nome>{color}10 Caixas de Saque : skin>eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWMxNzc4N2QwNjQ4NWNjOWUxOWNjY2FmM2ZiNTk3YzBlZTM2MGFkZDU5ZDI0M2M2ZmVhZDUzZTBhNDY5YmYyZiJ9fX0= : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos!'
     message: '&aVocê coletou sua entrega mensal de 10 Caixas de Saque!'
     rewards:
@@ -34,7 +34,7 @@ deliveries:
   lcmvpplus:
     slot: 14
     days: 30
-    permission: 'role.mvpplus'
+    role: 'MVP+'
     icon: 'SKULL_ITEM:3 : 15 : nome>{color}15 Caixas de Saque : skin>eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWMxNzc4N2QwNjQ4NWNjOWUxOWNjY2FmM2ZiNTk3YzBlZTM2MGFkZDU5ZDI0M2M2ZmVhZDUzZTBhNDY5YmYyZiJ9fX0= : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos'
     message: '&aVocê coletou sua entrega mensal de 15 Caixas de Saque!'
     rewards:
@@ -42,7 +42,7 @@ deliveries:
   lcyt:
     slot: 15
     days: 30
-    permission: 'role.youtuber'
+    role: 'YouTuber'
     icon: 'SKULL_ITEM:3 : 20 : nome>{color}20 Caixas de Saque : skin>eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWMxNzc4N2QwNjQ4NWNjOWUxOWNjY2FmM2ZiNTk3YzBlZTM2MGFkZDU5ZDI0M2M2ZmVhZDUzZTBhNDY5YmYyZiJ9fX0= : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos'
     message: '&aVocê coletou sua entrega mensal de 20 Caixas de Saque!'
     rewards:
@@ -50,7 +50,7 @@ deliveries:
   cvip:
     slot: 21
     days: 30
-    permission: 'role.vip'
+    role: 'VIP'
     icon: 'STORAGE_MINECART : 1 : nome>{color}250 Cash : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos!'
     message: '&aVocê coletou sua entrega mensal de 250 Cash!'
     rewards:
@@ -58,7 +58,7 @@ deliveries:
   cmvp:
     slot: 22
     days: 30
-    permission: 'role.mvp'
+    role: 'MVP'
     icon: 'STORAGE_MINECART : 1 : nome>{color}1000 Cash : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos!'
     message: '&aVocê coletou sua entrega mensal de 1000 Cash!'
     rewards:
@@ -66,7 +66,7 @@ deliveries:
   cmvpplus:
     slot: 23
     days: 30
-    permission: 'role.mvpplus'
+    role: 'MVP+'
     icon: 'STORAGE_MINECART : 1 : nome>{color}1500 Cash : desc>&7Gratuito para você! Colete mensalmente\n&7e adquira itens épicos!'
     message: '&aVocê coletou sua entrega mensal de 1500 Cash!'
     rewards:
@@ -74,7 +74,7 @@ deliveries:
   bvip:
     slot: 30
     days: 30
-    permission: 'role.vip'
+    role: 'VIP'
     icon: 'POTION:8261 : 2 : esconder>tudo : nome>{color}2 Multiplicadores de Coins : desc>&7Gratuito para você! Colete mensalmente\n&7para conseguir ainda mais coins.\n \n &8▪ &f1 Multiplicador Pessoal 2.0x &7(1 hora)\n &8▪ &f1 Multiplicador Geral 2.0x &7(12 horas)'
     message: '&aVocê coletou sua entrega mensal de Multiplicadores de Coins!'
     rewards:
@@ -83,7 +83,7 @@ deliveries:
   bmvp:
     slot: 31
     days: 30
-    permission: 'role.mvp'
+    role: 'MVP'
     icon: 'POTION:8261 : 3 : esconder>tudo : nome>{color}3 Multiplicadores de Coins : desc>&7Gratuito para você! Colete mensalmente\n&7para conseguir ainda mais coins.\n \n &8▪ &f2 Multiplicadores Pessoal 2.0x &7(2 horas)\n &8▪ &f1 Multiplicador Geral 2.0x &7(1 dia)'
     message: '&aVocê coletou sua entrega mensal de Multiplicadores de Coins!'
     rewards:
@@ -92,7 +92,7 @@ deliveries:
   bmvpplus:
     slot: 32
     days: 30
-    permission: 'role.mvpplus'
+    role: 'MVP+'
     icon: 'POTION:8261 : 5 : esconder>tudo : nome>{color}5 Multiplicadores de Coins : desc>&7Gratuito para você! Colete mensalmente\n&7para conseguir ainda mais coins.\n \n &8▪ &f3 Multiplicadores Pessoal 2.0x &7(2 horas)\n &8▪ &f2 Multiplicadores Geral 2.0x &7(1 dia)'
     message: '&aVocê coletou sua entrega mensal de Multiplicadores de Coins!'
     rewards:

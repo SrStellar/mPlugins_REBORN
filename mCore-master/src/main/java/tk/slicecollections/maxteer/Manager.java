@@ -7,6 +7,7 @@ import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.MethodAccessor;
 
 import java.lang.reflect.Array;
+import java.util.logging.Level;
 
 public class Manager {
 

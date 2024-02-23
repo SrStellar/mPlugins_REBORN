@@ -1,5 +1,6 @@
 package tk.slicecollections.maxteer.libraries.menu;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -8,6 +9,7 @@ import tk.slicecollections.maxteer.plugin.MPlugin;
 /**
  * @author Maxter
  */
+@Getter
 public class PlayerMenu extends Menu implements Listener {
 
   protected Player player;
@@ -29,7 +31,4 @@ public class PlayerMenu extends Menu implements Listener {
     this.player.openInventory(getInventory());
   }
 
-  public Player getPlayer() {
-    return player;
-  }
 }

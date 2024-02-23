@@ -31,7 +31,6 @@ public class CashManager {
         ProfileInformation information = this.profile.getCache().loadTableCache(ProfileCache.class).loadCollection(ProfileInformation.class);
         Long cashCurrent = getCash();
         information.updateValue("cash", cashCurrent + amount);
-        System.out.println(cashCurrent + amount);
     }
 
     public void removeCash(Long amount) throws Exception {

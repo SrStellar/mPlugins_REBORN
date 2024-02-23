@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.cmd.Commands;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
+import tk.slicecollections.maxteer.deliveries.Delivery;
 import tk.slicecollections.maxteer.hook.MCoreExpansion;
 import tk.slicecollections.maxteer.hook.protocollib.FakeAdapter;
 import tk.slicecollections.maxteer.hook.protocollib.HologramAdapter;
@@ -30,6 +31,7 @@ import tk.slicecollections.maxteer.plugin.MPlugin;
 import tk.slicecollections.maxteer.plugin.config.MConfig;
 import tk.slicecollections.maxteer.queue.Queue;
 import tk.slicecollections.maxteer.queue.QueuePlayer;
+import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.io.*;
@@ -130,6 +132,8 @@ public class Core extends MPlugin {
 
     FakeManager.setupFake();
 
+    Delivery.setupDeliveries();
+    TitleManager.setupTitles();
     Commands.setupCommands();
     Listeners.setupListeners();
 
@@ -146,6 +150,8 @@ public class Core extends MPlugin {
 
   @Override
   public void disable() {
+    Profile.listProfiles().forEach(Profile::saveSync);
+    Database.getInstance().destroyConnection();
     this.getLogger().info("O plugin foi desativado.");
   }
 
@@ -175,7 +181,7 @@ public class Core extends MPlugin {
       return;
     }
 
-    Player player = null;
+    Player player = profile.getPlayer();
     if (player != null) {
       player.closeInventory();
       Queue queue = player.hasPermission("mcore.queue") ? Queue.VIP : Queue.MEMBER;

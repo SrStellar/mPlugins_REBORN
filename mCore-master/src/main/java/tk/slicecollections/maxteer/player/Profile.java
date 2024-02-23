@@ -1,8 +1,7 @@
 package tk.slicecollections.maxteer.player;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,12 +11,17 @@ import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
+import tk.slicecollections.maxteer.deliveries.DeliveryContainer;
 import tk.slicecollections.maxteer.game.Game;
 import tk.slicecollections.maxteer.game.GameTeam;
 import tk.slicecollections.maxteer.cash.CashManager;
+import tk.slicecollections.maxteer.hook.FriendsHook;
+import tk.slicecollections.maxteer.player.hotbar.Hotbar;
+import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.preferences.PreferencesContainer;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.player.scoreboard.MScoreboard;
+import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.Collection;
@@ -49,6 +53,10 @@ public class Profile {
     }
 
     public static void createProfile(String name) {
+        if (PROFILES.containsKey(name)) {
+            return;
+        }
+
         Profile profile = new Profile(name);
         profile.load();
         PROFILES.put(name, profile);
@@ -72,10 +80,17 @@ public class Profile {
     @Getter
     private MScoreboard scoreboard;
 
+    @Getter
+    @Setter
+    private Hotbar hotbar;
+
     private Game<? extends GameTeam> game;
     private Map<String, Long> lastHit = new HashMap<>();
+
+    @Setter
     private Player player;
 
+    @SneakyThrows
     public void load() {
         this.cache = new PlayerCache(this.name);
         this.cache.setupDataCache();
@@ -180,10 +195,42 @@ public class Profile {
         if (player == null) {
             return;
         }
-    }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+        if (this.hotbar != null) {
+            this.hotbar.getButtons().forEach(button -> {
+                if (button.getAction().getValue().equalsIgnoreCase("jogadores")) {
+                    player.getInventory().setItem(button.getSlot() - 1, BukkitUtils.deserializeItemStack(PlaceholderAPI.setPlaceholders(player, button.getIcon())));
+                }
+            });
+        }
+
+        if (!this.playingGame()) {
+            for (Player online : Bukkit.getOnlinePlayers().stream().filter(online -> !online.equals(getPlayer())).collect(Collectors.toList())) {
+                Profile onlineProfile = Profile.loadProfile(online.getName());
+                if (onlineProfile == null) {
+                    return;
+                }
+
+                if (!onlineProfile.playingGame()) {
+                    if (loadPreferencesContainer().getPreference(PreferenceEnum.PLAYER_VISIBILITY) || Role.findRoleByPermission(online).getAlwaysVisible()) {
+                        player.showPlayer(online);
+                    } else {
+                        player.hidePlayer(online);
+                    }
+
+                    if (onlineProfile.loadPreferencesContainer().getPreference(PreferenceEnum.PLAYER_VISIBILITY) || Role.findRoleByPermission(player).getAlwaysVisible()) {
+                        online.showPlayer(player);
+                    } else {
+                        online.hidePlayer(player);
+                    }
+
+                    return;
+                }
+
+                player.hidePlayer(online);
+                online.hidePlayer(player);
+            }
+        }
     }
 
     public Player getPlayer() {
@@ -220,5 +267,9 @@ public class Profile {
 
     public PreferencesContainer loadPreferencesContainer() {
         return new PreferencesContainer(this);
+    }
+
+    public DeliveryContainer loadDeliveryContainer() {
+        return new DeliveryContainer(this);
     }
 }

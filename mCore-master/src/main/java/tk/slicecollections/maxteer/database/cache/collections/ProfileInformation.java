@@ -9,6 +9,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
+@SuppressWarnings("unchecked")
 public class ProfileInformation extends DataCollectionCache {
 
     public ProfileInformation(String playerKey) {
@@ -27,7 +28,6 @@ public class ProfileInformation extends DataCollectionCache {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Object getDefaultValue() {
         JSONObject defaultObject = new JSONObject();
         defaultObject.put("cash", 0L);
@@ -48,10 +48,13 @@ public class ProfileInformation extends DataCollectionCache {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void updateValue(String key, Object value) throws ParseException {
         JSONObject newValue = getAsJsonObject();
         newValue.put(key, value);
         this.updateValue(newValue.toJSONString());
+    }
+
+    public <T> T getInformation(String key, T classT) throws ParseException {
+        return (T) getAsJsonObject().get(key);
     }
 }

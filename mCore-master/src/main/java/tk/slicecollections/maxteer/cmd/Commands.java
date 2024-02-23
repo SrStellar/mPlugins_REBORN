@@ -38,6 +38,6 @@ public abstract class Commands extends Command {
   public static void setupCommands() {
     new CashCommand();
     new CoreCommand();
-    new LobbyCommand();
+    new TestCmd();
   }
 }

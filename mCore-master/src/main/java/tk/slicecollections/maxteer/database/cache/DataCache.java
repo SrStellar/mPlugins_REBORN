@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public abstract class DataCache implements DataCacheInterface {
 
     public static void setupDataCache() {
-        new ProfileCache("").setupTables();
+        new ProfileCache("");
     }
 
     @NonNull
