@@ -2,15 +2,16 @@ package tk.slicecollections.maxteer.database.cache.collections;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
+import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 import tk.slicecollections.maxteer.titles.Title;
 
-public class TitleInformation extends DataCollection {
-    public TitleInformation(String playerKey) {
-        super("titles", "mCoreProfile", null, playerKey);
+public class AchievementsInformation extends DataCollection {
+    public AchievementsInformation(String playerKey) {
+        super("achievements", "mCoreProfile", null, playerKey);
     }
 
     @Override
@@ -18,8 +19,8 @@ public class TitleInformation extends DataCollection {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            if (!mySQL.existsColumn("mCoreProfile", "titles")) {
-                mySQL.addColumn("mCoreProfile", "titles");
+            if (!mySQL.existsColumn("mCoreProfile", "achievements")) {
+                mySQL.addColumn("mCoreProfile", "achievements");
             }
         }
     }
@@ -39,20 +40,20 @@ public class TitleInformation extends DataCollection {
     }
 
     @SuppressWarnings("unchecked")
-    public void addNewTitle(Title title) throws ParseException {
-        JSONArray currentTitles = this.getAsJsonArray();
-        currentTitles.add(title.getId());
-        this.updateValue(currentTitles);
+    public void addNewAchievement(Achievement achievement) throws ParseException {
+        JSONArray currentAchievements = this.getAsJsonArray();
+        currentAchievements.add(achievement.getId());
+        this.updateValue(currentAchievements);
     }
 
-    public void removeTitle(Title title) throws ParseException {
-        JSONArray currentTitles = this.getAsJsonArray();
-        currentTitles.remove(title.getId());
-        this.updateValue(currentTitles);
+    public void removeAchievement(Achievement achievement) throws ParseException {
+        JSONArray currentAchievements = this.getAsJsonArray();
+        currentAchievements.remove(achievement.getId());
+        this.updateValue(currentAchievements);
     }
 
-    public boolean hasTitle(Title title) throws ParseException {
-        JSONArray currentTitles = this.getAsJsonArray();
-        return currentTitles.contains(String.valueOf(title.getId()));
+    public boolean hasAchievement(Achievement achievement) throws ParseException {
+        JSONArray currentAchievements = this.getAsJsonArray();
+        return currentAchievements.contains(String.valueOf(achievement.getId()));
     }
 }

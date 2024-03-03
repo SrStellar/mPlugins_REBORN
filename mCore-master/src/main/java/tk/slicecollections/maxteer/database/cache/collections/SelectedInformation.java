@@ -3,12 +3,12 @@ package tk.slicecollections.maxteer.database.cache.collections;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.database.Database;
-import tk.slicecollections.maxteer.database.cache.DataCollectionCache;
+import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 import tk.slicecollections.maxteer.titles.Title;
 
-public class SelectedInformation extends DataCollectionCache {
+public class SelectedInformation extends DataCollection {
 
     public SelectedInformation(String playerKey) {
         super("selected", "mCoreProfile", null, playerKey);

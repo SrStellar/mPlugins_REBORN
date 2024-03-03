@@ -5,25 +5,25 @@ import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
-import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
-import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
-import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
-import tk.slicecollections.maxteer.database.cache.collections.TitleInformation;
+import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
+import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProfileCache extends Data {
+public class SkyWarsCache extends Data {
 
-    public ProfileCache(String playerKey) {
-        super("mCoreProfile", playerKey);
+    public SkyWarsCache(String playerKey) {
+        super("mCoreSkyWars", playerKey);
         setupTables();
-        setupCollections(ProfileInformation.class, SelectedInformation.class, TitleInformation.class, AchievementsInformation.class);
+        setupCollections(SkyWarsStatsInformation.class);
     }
 
     @Override
@@ -31,11 +31,12 @@ public class ProfileCache extends Data {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             ((MySQL) Database.getInstance()).setupTable(this.tableName, "`name` VARCHAR(32) PRIMARY KEY NOT NULL, ",
-                    "`informations` TEXT, ",
-                    "`titles` VARCHAR(255), ",
-                    "`boosters` VARCHAR(255), ",
-                    "`achievements` VARCHAR(255), ",
-                    "`selected` VARCHAR(255)");
+                    "`stats` TEXT, ",
+                    "`coins` DOUBLE, ",
+                    "`lastmap` LONG, ",
+                    "`cosmetics` VARCHAR(255), ",
+                    "`selected` VARCHAR(255), ",
+                    "`kitconfig` VARCHAR(255)");
         }
 
         return this;
@@ -56,6 +57,8 @@ public class ProfileCache extends Data {
             }
         });
 
+        registerNewCollection(new CoinsGenericInformation(this.playerKey, "coins", "mCoreSkyWars")); //Coluna generica de coins
+        
         if (this.playerKey.isEmpty()) {
             return;
         }

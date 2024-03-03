@@ -3,8 +3,10 @@ package tk.slicecollections.maxteer.cmd;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.json.simple.parser.ParseException;
+import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
+import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
 import tk.slicecollections.maxteer.menus.MenuDeliveries;
 import tk.slicecollections.maxteer.menus.MenuProfile;
 import tk.slicecollections.maxteer.menus.profile.MenuPreferences;
@@ -75,6 +77,12 @@ public class TestCmd extends Commands{
 
             case "preferences": {
                 new MenuPreferences(profile);
+                break;
+            }
+
+            case "addCoins": {
+                profile.getCache().loadTableCache(SkyWarsCache.class).loadCollectionGeneric(CoinsGenericInformation.class, "coins").addCoins(10D);
+                sender.sendMessage("§aAdicionado com sucesso!");
                 break;
             }
         }

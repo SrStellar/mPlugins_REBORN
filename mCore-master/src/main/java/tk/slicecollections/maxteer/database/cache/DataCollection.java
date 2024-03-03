@@ -1,6 +1,5 @@
 package tk.slicecollections.maxteer.database.cache;
 
-import javafx.concurrent.Task;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -8,15 +7,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsCacheInterface;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 
 @Getter
 @AllArgsConstructor
-public abstract class DataCollectionCache implements DataCollectionsCacheInterface {
+public abstract class DataCollection implements DataCollectionsInterface {
 
     @NonNull
     private String columnName;
@@ -33,15 +28,19 @@ public abstract class DataCollectionCache implements DataCollectionsCacheInterfa
     }
 
     public String getAsString() {
-        return (String) value;
+        return value.toString();
     }
 
     public Long getAsLong() {
-        return (Long) value;
+        return Long.parseLong(value.toString());
     }
 
     public Integer getAsInt() {
-        return (Integer) value;
+        return Integer.parseInt(value.toString());
+    }
+
+    public Double getAsDouble() {
+        return Double.parseDouble(value.toString());
     }
 
     public JSONArray getAsJsonArray() throws ParseException {

@@ -8,7 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
+import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
+import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
+import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.deliveries.DeliveryContainer;
@@ -272,4 +275,13 @@ public class Profile {
     public DeliveryContainer loadDeliveryContainer() {
         return new DeliveryContainer(this);
     }
+
+    public AchievementsInformation loadAchievementsContainer() {
+        return this.getCache().loadTableCache(ProfileCache.class).loadCollection(AchievementsInformation.class);
+    }
+
+    public CoinsGenericInformation loadCoinsContainer(Class<? extends Data> classData) {
+        return this.getCache().loadTableCache(classData).loadCollectionGeneric(CoinsGenericInformation.class, "coins");
+    }
+
 }

@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import tk.slicecollections.maxteer.Manager;
-import tk.slicecollections.maxteer.database.cache.DataCache;
+import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.interfaces.DatabaseInterface;
 
@@ -47,13 +47,14 @@ public class MySQL implements DatabaseInterface {
         config.setPassword(password);
         config.setMinimumIdle(5);
         config.setMaximumPoolSize(100);
-        config.setConnectionTimeout(5000);
-        config.setIdleTimeout(5000);
+        config.setConnectionTimeout(30000);
+        config.setIdleTimeout(30000);
         config.setValidationTimeout(3000);
         config.setAutoCommit(true);
-        config.setMaxLifetime(1800000);
+        config.setMaxLifetime(600000);
+        config.addDataSourceProperty("autoReconnect", "true");
         this.resource = new HikariDataSource(config);
-        DataCache.setupDataCache();
+        Data.setupDataCache();
 
         Manager.sendMessageToConsole("Conexão MySQL realizada com sucesso!");
     }

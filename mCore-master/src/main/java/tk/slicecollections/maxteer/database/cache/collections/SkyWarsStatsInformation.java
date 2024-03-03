@@ -6,14 +6,11 @@ import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
-import tk.slicecollections.maxteer.player.role.Role;
-import tk.slicecollections.maxteer.utils.StringUtils;
 
 @SuppressWarnings("unchecked")
-public class ProfileInformation extends DataCollection {
-
-    public ProfileInformation(String playerKey) {
-        super("informations", "mCoreProfile", null, playerKey);
+public class SkyWarsStatsInformation extends DataCollection {
+    public SkyWarsStatsInformation(String playerKey) {
+        super("stats", "mCoreSkyWars", null, playerKey);
     }
 
     @Override
@@ -21,8 +18,8 @@ public class ProfileInformation extends DataCollection {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            if (!mySQL.existsColumn("mCoreProfile", "informations")) {
-                mySQL.addColumn("mCoreProfile", "informations");
+            if (!mySQL.existsColumn("mCoreSkyWars", "stats")) {
+                mySQL.addColumn("mCoreSkyWars", "stats");
             }
         }
     }
@@ -30,12 +27,16 @@ public class ProfileInformation extends DataCollection {
     @Override
     public Object getDefaultValue() {
         JSONObject defaultObject = new JSONObject();
-        defaultObject.put("cash", 0L);
-        defaultObject.put("role", StringUtils.stripColors(Role.getDefaultRole().getName()));
-        defaultObject.put("deliveries", new JSONObject());
-        defaultObject.put("preferences", new JSONObject());
-        defaultObject.put("created", "");
-        defaultObject.put("lastLogin", "");
+        defaultObject.put("1v1kills", 0L);
+        defaultObject.put("1v1deaths", 0L);
+        defaultObject.put("1v1assists", 0L);
+        defaultObject.put("1v1games", 0L);
+        defaultObject.put("1v1wins", 0L);
+        defaultObject.put("2v2kills", 0L);
+        defaultObject.put("2v2deaths", 0L);
+        defaultObject.put("2v2assists", 0L);
+        defaultObject.put("2v2games", 0L);
+        defaultObject.put("2v2wins", 0L);
         return defaultObject.toJSONString();
     }
 

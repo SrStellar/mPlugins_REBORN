@@ -39,5 +39,6 @@ public abstract class Commands extends Command {
     new CashCommand();
     new CoreCommand();
     new TestCmd();
+    new CoinsCommand();
   }
 }
