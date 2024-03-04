@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
-import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
 import tk.slicecollections.maxteer.player.Profile;
@@ -46,15 +45,16 @@ public abstract class Achievement {
         ACHIEVEMENTS.remove(achievement);
     }
 
-    private Long id;
-    private String name;
-    private Class<? extends DataCollection> classCollection;
-    private String key;
-    private Long reach;
-    private String iconBase;
-    private AchievementReward reward;
-    private Long amountReward;
-    private Title titleReward;
+    protected Long id;
+    protected String name;
+    protected Class<? extends DataCollection> classCollection;
+    protected String key;
+    protected Long reach;
+    protected String iconBase;
+    protected AchievementReward reward;
+    protected Long amountReward;
+    protected Title titleReward;
+    protected String[] additionalKeys;
 
     public abstract void check(Profile profile);
     public abstract ItemStack getIcon(Profile profile);
@@ -67,4 +67,5 @@ public abstract class Achievement {
             return false;
         }
     }
+
 }

@@ -55,7 +55,7 @@ public class SkyWarsStatsInformation extends DataCollection {
         this.updateValue(newValue.toJSONString());
     }
 
-    public <T> T getInformation(String key, T classT) throws ParseException {
+    public <T> T getInformation(String key) throws ParseException {
         return (T) getAsJsonObject().get(key);
     }
 }

@@ -1,5 +1,6 @@
 package tk.slicecollections.maxteer.player.scoreboard;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -14,7 +15,9 @@ import tk.slicecollections.maxteer.utils.StringUtils;
 public abstract class MScoreboard {
 
   private Player player;
+  @Getter
   private Objective objective;
+  @Getter
   private Scoreboard scoreboard;
   private ScoreboardScroller scroller;
 
@@ -211,11 +214,4 @@ public abstract class MScoreboard {
     return "mScoreboard";
   }
 
-  public Scoreboard getScoreboard() {
-    return this.scoreboard;
-  }
-
-  public Objective getObjective() {
-    return this.objective;
-  }
 }

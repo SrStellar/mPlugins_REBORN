@@ -16,7 +16,7 @@ public enum AchievementReward {
 
     private final String name;
 
-    private void setupReward(Profile profile, Double amount, Title title) {
+    public void setupReward(Profile profile, Double amount, Title title) {
         switch (this.name) {
             case "coins": {
                 profile.loadCoinsContainer(SkyWarsCache.class).addCoins(amount);
@@ -34,6 +34,7 @@ public enum AchievementReward {
 
             case "title": {
                 title.addTitleToPlayer(profile);
+                System.out.println("a");
                 break;
             }
         }

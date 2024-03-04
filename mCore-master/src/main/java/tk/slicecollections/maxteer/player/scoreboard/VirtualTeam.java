@@ -77,7 +77,7 @@ public class VirtualTeam {
       this.prefix = this.prefix.substring(0, this.prefix.length() - 1);
       text = text.substring(this.prefix.length());
     } else {
-      text = text.substring(Math.min(text.length(), prefix.length()));
+      text = text.substring(prefix.length());
     }
 
     this.suffix = StringUtils.getLastColor(this.prefix) + text;

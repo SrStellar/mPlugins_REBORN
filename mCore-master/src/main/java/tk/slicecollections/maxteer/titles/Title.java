@@ -75,7 +75,7 @@ public class Title {
 
     public boolean has(Profile profile) {
         try {
-            return profile.getPlayer().hasPermission("mcore.titles." + title.toLowerCase()) || profile.getCache().loadTableCache(ProfileCache.class).loadCollection(TitleInformation.class).hasTitle(this);
+            return profile.getCache().loadTableCache(ProfileCache.class).loadCollection(TitleInformation.class).hasTitle(this) || profile.getPlayer().hasPermission("mcore.titles." + title.toLowerCase());
         } catch (ParseException e) {
             return false;
         }

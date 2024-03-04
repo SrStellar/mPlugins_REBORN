@@ -8,7 +8,7 @@ import java.util.List;
 public class ScoreboardScroller {
 
   private int index;
-  private List<String> frames;
+  private final List<String> frames;
 
   public ScoreboardScroller(List<String> frames) {
     this.index = -1;

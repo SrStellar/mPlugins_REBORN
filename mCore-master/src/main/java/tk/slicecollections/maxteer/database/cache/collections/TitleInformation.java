@@ -53,6 +53,6 @@ public class TitleInformation extends DataCollection {
 
     public boolean hasTitle(Title title) throws ParseException {
         JSONArray currentTitles = this.getAsJsonArray();
-        return currentTitles.contains(String.valueOf(title.getId()));
+        return currentTitles.contains(title.getId());
     }
 }

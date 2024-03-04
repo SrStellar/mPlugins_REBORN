@@ -360,7 +360,7 @@ public class MySQL implements DatabaseInterface {
 
     public Connection openConnection() {
         try {
-            if (connection == null || connection.isClosed()){
+            if (connection == null || connection.isClosed() || !connection.isValid(5)){
                 this.connection = resource.getConnection();
             }
 

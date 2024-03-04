@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
+import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.cmd.Commands;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
@@ -136,6 +137,7 @@ public class Core extends MPlugin {
     TitleManager.setupTitles();
     Commands.setupCommands();
     Listeners.setupListeners();
+    Achievement.setupAchievements();
 
     ProtocolLibrary.getProtocolManager().addPacketListener(new FakeAdapter());
     ProtocolLibrary.getProtocolManager().addPacketListener(new NPCAdapter());

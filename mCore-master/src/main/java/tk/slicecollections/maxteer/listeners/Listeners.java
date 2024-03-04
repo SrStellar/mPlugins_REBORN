@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.Manager;
+import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
@@ -120,6 +121,7 @@ public class Listeners implements Listener {
       }
 
       information.updateValue("lastLogin", System.currentTimeMillis());
+      Achievement.listAchievements().forEach(achievement -> achievement.check(profile));
     }
   }
 
