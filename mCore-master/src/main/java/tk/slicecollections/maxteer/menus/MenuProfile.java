@@ -12,9 +12,7 @@ import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.libraries.menu.PlayerMenu;
-import tk.slicecollections.maxteer.menus.profile.MenuAchievements;
-import tk.slicecollections.maxteer.menus.profile.MenuPreferences;
-import tk.slicecollections.maxteer.menus.profile.MenuTitles;
+import tk.slicecollections.maxteer.menus.profile.*;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
@@ -86,12 +84,11 @@ public class MenuProfile extends PlayerMenu {
 
                             case 11: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                //new MenuStatistics(profile);
+                                new MenuStatistics(profile);
                                 break;
                             }
                             case 13: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                player.closeInventory();
                                 new MenuPreferences(profile);
                                 break;
                             }
@@ -110,7 +107,7 @@ public class MenuProfile extends PlayerMenu {
 
                             case 16: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                new MenuAchievements(profile);
+                                new MenuAchievementsList(profile);
                                 break;
                             }
                         }

@@ -6,8 +6,7 @@ import lombok.RequiredArgsConstructor;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataInterface;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 public abstract class Data implements DataInterface {
@@ -23,7 +22,7 @@ public abstract class Data implements DataInterface {
     @NonNull
     protected String playerKey;
 
-    private final List<DataCollection> dataCollectionCache = new ArrayList<>();
+    private final Set<DataCollection> dataCollectionCache = new HashSet<>();
 
     public void registerNewCollection(DataCollection collectionCache) {
         this.dataCollectionCache.add(collectionCache);
@@ -39,7 +38,7 @@ public abstract class Data implements DataInterface {
         return (T) dataCollectionCache.stream().filter(collectionCache -> collectionCache.getClass().isAssignableFrom(collection) && collectionCache.getColumnName().equals(columnName)).findFirst().orElse(null);
     }
 
-    public List<DataCollection> listCollections() {
+    public Collection<DataCollection> listCollections() {
         return this.dataCollectionCache;
     }
 }

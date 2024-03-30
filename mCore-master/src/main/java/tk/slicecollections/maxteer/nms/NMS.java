@@ -61,63 +61,63 @@ public class NMS {
   public static void setValueAndSignature(Player player, String value, String signature) {
     BRIDGE.setValueAndSignature(player, value, signature);
   }
-  
+
   public static void sendTabListAdd(Player player, Player listPlayer) {
     BRIDGE.sendTabListAdd(player, listPlayer);
   }
-  
+
   public static void sendTabListRemove(Player player, Collection<SkinnableEntity> skinnableEntities) {
     BRIDGE.sendTabListRemove(player, skinnableEntities);
   }
-  
+
   public static void sendTabListRemove(Player player, Player listPlayer) {
     BRIDGE.sendTabListRemove(player, listPlayer);
   }
-  
+
   public static void removeFromPlayerList(Player player) {
     BRIDGE.removeFromPlayerList(player);
   }
-  
+
   public static void removeFromServerPlayerList(Player player) {
     BRIDGE.removeFromServerPlayerList(player);
   }
-  
+
   public static boolean addToWorld(World world, Entity entity, SpawnReason reason) {
     return BRIDGE.addToWorld(world, entity, reason);
   }
-  
+
   public static void removeFromWorld(Entity entity) {
     BRIDGE.removeFromWorld(entity);
   }
-  
+
   public static void replaceTrackerEntry(Player player) {
     BRIDGE.replaceTrackerEntry(player);
   }
-  
+
   public static void sendPacket(Player player, Object packet) {
     BRIDGE.sendPacket(player, packet);
   }
-  
+
   public static void look(Entity entity, float yaw, float pitch) {
     BRIDGE.look(entity, yaw, pitch);
   }
-  
+
   public static void setHeadYaw(Entity entity, float yaw) {
     BRIDGE.setHeadYaw(entity, yaw);
   }
-  
+
   public static void setStepHeight(LivingEntity entity, float height) {
     BRIDGE.setStepHeight(entity, height);
   }
-  
+
   public static float getStepHeight(LivingEntity entity) {
     return BRIDGE.getStepHeight(entity);
   }
-  
+
   public static SkinnableEntity getSkinnable(Entity entity) {
     return BRIDGE.getSkinnable(entity);
   }
-  
+
   public static void flyingMoveLogic(LivingEntity entity, float f, float f1) {
     BRIDGE.flyingMoveLogic(entity, f, f1);
   }

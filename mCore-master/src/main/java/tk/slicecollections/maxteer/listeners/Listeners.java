@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.entity.ArmorStand;
@@ -16,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.json.simple.parser.ParseException;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
@@ -25,6 +27,7 @@ import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.player.Profile;
+import tk.slicecollections.maxteer.player.hotbar.HotbarButton;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.fake.FakeManager;
 import tk.slicecollections.maxteer.player.role.Role;
@@ -112,7 +115,7 @@ public class Listeners implements Listener {
 
   @SneakyThrows
   @EventHandler
-  public void teste(PlayerJoinEvent event) {
+  public void onPlayerJoin(PlayerJoinEvent event) {
     Profile profile = Profile.loadProfile(event.getPlayer().getName());
     if (profile != null) {
       ProfileInformation information = profile.getCache().loadTableCache(ProfileCache.class).loadCollection(ProfileInformation.class);
@@ -151,8 +154,6 @@ public class Listeners implements Listener {
         players.spigot().sendMessage(component);
       }
     });
-
-    Profile.loadProfile(player.getName()).loadPreferencesContainer();
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -194,6 +195,17 @@ public class Listeners implements Listener {
   public void onPlayerInteract(PlayerInteractEvent evt) {
     Player player = evt.getPlayer();
     Profile profile = Profile.loadProfile(player.getName());
+
+    if (profile != null && profile.getHotbar() != null) {
+      ItemStack item = player.getItemInHand();
+      if (evt.getAction().name().contains("CLICK") && item != null && item.hasItemMeta()) {
+        HotbarButton button = profile.getHotbar().compareButton(player, item);
+        if (button != null) {
+          evt.setCancelled(true);
+          button.getAction().execute(profile);
+        }
+      }
+    }
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
@@ -210,6 +222,20 @@ public class Listeners implements Listener {
     if (evt.getWhoClicked() instanceof Player) {
       Player player = (Player) evt.getWhoClicked();
       Profile profile = Profile.loadProfile(player.getName());
+
+      if (profile != null && profile.getHotbar() != null) {
+        ItemStack item = evt.getCurrentItem();
+        if (item != null && item.getType() != Material.AIR) {
+          if (evt.getClickedInventory() != null && evt.getClickedInventory().equals(player.getInventory()) && item.hasItemMeta()) {
+            HotbarButton button = profile.getHotbar().compareButton(player, item);
+            if (button != null) {
+              evt.setCancelled(true);
+              button.getAction().execute(profile);
+            }
+          }
+        }
+      }
     }
   }
+
 }

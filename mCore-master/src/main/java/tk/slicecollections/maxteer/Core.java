@@ -52,7 +52,6 @@ public class Core extends MPlugin {
 
   @Getter
   private static Core instance;
-  public static boolean validInit;
   public static final List<String> warnings = new ArrayList<>();
   public static final List<String> minigames = Arrays.asList("Sky Wars", "The Bridge", "Murder");
   public static String minigame = "";

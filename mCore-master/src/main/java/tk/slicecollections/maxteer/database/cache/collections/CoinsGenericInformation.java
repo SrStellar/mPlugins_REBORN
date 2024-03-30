@@ -46,7 +46,6 @@ public class CoinsGenericInformation extends DataCollection {
     }
 
     public Double getCoins() {
-        System.out.println(this.getAsString());
         return this.getAsDouble();
     }
 

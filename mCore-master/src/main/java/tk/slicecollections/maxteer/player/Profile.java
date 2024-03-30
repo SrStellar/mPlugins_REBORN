@@ -29,10 +29,7 @@ import tk.slicecollections.maxteer.player.scoreboard.MScoreboard;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -44,9 +41,15 @@ import java.util.stream.Collectors;
 public class Profile {
 
     private static final ConcurrentHashMap<String, Profile> PROFILES = new ConcurrentHashMap<>();
+    private static final Map<String, UUID> UUID_CACHE = new HashMap<>();
 
     public static Collection<Profile> listProfiles() {
         return PROFILES.values();
+    }
+
+    public static Player findCached(String playerName) {
+        UUID uuid = UUID_CACHE.get(playerName.toLowerCase());
+        return uuid == null ? null : Bukkit.getPlayer(uuid);
     }
 
     public static Profile loadProfile(String name) {
@@ -68,6 +71,7 @@ public class Profile {
     }
 
     public static void destroy(Profile profile) {
+        UUID_CACHE.remove(profile.getName().toLowerCase());
         PROFILES.remove(profile.getName());
     }
 
@@ -92,7 +96,6 @@ public class Profile {
     private Game<? extends GameTeam> game;
     private Map<String, Long> lastHit = new HashMap<>();
 
-    @Setter
     private Player player;
 
     @SneakyThrows
@@ -244,6 +247,11 @@ public class Profile {
         }
 
         return this.player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+        UUID_CACHE.put(this.name.toLowerCase(), player.getUniqueId());
     }
 
     public Game<?> getGame() {

@@ -3,6 +3,7 @@ package tk.slicecollections.maxteer.player.role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
@@ -23,6 +24,9 @@ public class Role {
     return ROLES;
   }
 
+  public static String getPrefixed(String player) {
+    return findRoleByPermission(Bukkit.getPlayer(player)).getRoleColor();
+  }
   public static Role getDefaultRole() {
     return ROLES.stream().filter(role -> role.getPermission() == null).findFirst().orElse(ROLES.get(ROLES.size() - 1));
   }

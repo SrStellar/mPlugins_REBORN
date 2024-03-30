@@ -1,37 +1,23 @@
 package tk.slicecollections.maxteer.party;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import tk.slicecollections.maxteer.Manager;
 
-/**
- * @author Maxter
- */
+@Getter
+@AllArgsConstructor
 public class PartyPlayer {
+  private final String name;
 
-  private String name;
+  @Setter
   private PartyRole role;
-
-  public PartyPlayer(String name, PartyRole role) {
-    this.name = name;
-    this.role = role;
-  }
 
   public void sendMessage(String message) {
     Object player = Manager.getPlayer(name);
     if (player != null) {
       Manager.sendMessage(player, message);
     }
-  }
-
-  public void setRole(PartyRole role) {
-    this.role = role;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public PartyRole getRole() {
-    return this.role;
   }
 
   public boolean isOnline() {

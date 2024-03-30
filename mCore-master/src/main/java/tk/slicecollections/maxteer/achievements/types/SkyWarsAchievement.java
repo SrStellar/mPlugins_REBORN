@@ -206,6 +206,7 @@ public class SkyWarsAchievement extends Achievement {
         if (Objects.equals(getCurrent(profile), this.reach)) {
             this.reward.setupReward(profile, Double.valueOf(this.amountReward), titleReward);
             profile.getPlayer().playSound(profile.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
+            profile.loadAchievementsContainer().addNewAchievement(this);
         }
     }
 
@@ -226,7 +227,7 @@ public class SkyWarsAchievement extends Achievement {
         try {
             current = profile.loadSkyWarsStatsContainer().getInformation(this.key);
             for (String additionalKey : additionalKeys) {
-                current += (Long) profile.loadSkyWarsStatsContainer().getInformation(additionalKey);
+                current += profile.loadSkyWarsStatsContainer().getInformation(additionalKey, Long.class);
             }
         } catch (Exception e) {
             current = 0L;

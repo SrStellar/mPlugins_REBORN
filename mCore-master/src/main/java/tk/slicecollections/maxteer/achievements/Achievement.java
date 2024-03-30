@@ -29,6 +29,10 @@ public abstract class Achievement {
         return ACHIEVEMENTS.stream().filter(achievement -> achievement.getClass().isAssignableFrom(clazz)).map(achievement -> (T) achievement).collect(Collectors.toList());
     }
 
+    public static List<Achievement> listAllByClass(Class<? extends Achievement> clazz) {
+        return ACHIEVEMENTS.stream().filter(achievement -> achievement.getClass().isAssignableFrom(clazz)).collect(Collectors.toList());
+    }
+
     public static Achievement findById(Long ID) {
         return ACHIEVEMENTS.stream().filter(achievement -> achievement.getId().equals(ID)).findFirst().orElse(null);
     }

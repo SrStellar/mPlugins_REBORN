@@ -53,7 +53,6 @@ public class AchievementsInformation extends DataCollection {
     }
 
     public boolean hasAchievement(Achievement achievement) throws ParseException {
-        JSONArray currentAchievements = this.getAsJsonArray();
-        return currentAchievements.contains(String.valueOf(achievement.getId()));
+        return this.getAsJsonArray().contains(achievement.getId());
     }
 }

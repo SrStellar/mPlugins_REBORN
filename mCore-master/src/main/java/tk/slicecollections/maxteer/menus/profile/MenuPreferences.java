@@ -28,27 +28,27 @@ public class MenuPreferences extends PlayerMenu {
 
     @SneakyThrows
     public MenuPreferences(Profile profile) {
-        super(profile.getPlayer(), "Preferencias", 6);
+        super(profile.getPlayer(), "Preferencias", 5);
         PreferencesContainer container = profile.loadPreferencesContainer();
 
-        this.setItem(1, BukkitUtils.deserializeItemStack("347 : 1 : nome>&aJogadores : desc>&7Ative ou desative os\n&7jogadores no lobby."));
-        this.setItem(10, BukkitUtils.deserializeItemStack(
+        this.setItem(11, BukkitUtils.deserializeItemStack("347 : 1 : nome>&aJogadores : desc>&7Ative ou desative os\n&7jogadores no lobby."));
+        this.setItem(20, BukkitUtils.deserializeItemStack(
                 "INK_SACK:" + container.getInkColor(PreferenceEnum.PLAYER_VISIBILITY) + " : 1 : nome>" + container.getStateName(PreferenceEnum.PLAYER_VISIBILITY) + " : desc>&fEstado: &7" + container.getStateName(PreferenceEnum.PLAYER_VISIBILITY, true) + "\n \n&eClique para modificar!"));
 
-        this.setItem(2, BukkitUtils.deserializeItemStack("PAPER : 1 : nome>&aMensagens privadas : desc>&7Ative ou desative as mensagens\n&7enviadas através do tell."));
-        this.setItem(11, BukkitUtils.deserializeItemStack(
+        this.setItem(12, BukkitUtils.deserializeItemStack("PAPER : 1 : nome>&aMensagens privadas : desc>&7Ative ou desative as mensagens\n&7enviadas através do tell."));
+        this.setItem(21, BukkitUtils.deserializeItemStack(
                 "INK_SACK:" + container.getInkColor(PreferenceEnum.PRIVATE_MESSAGES) + " : 1 : nome>" + container.getStateName(PreferenceEnum.PRIVATE_MESSAGES) + " : desc>&fEstado: &7" + container.getStateName(PreferenceEnum.PRIVATE_MESSAGES, true) + "\n \n&eClique para modificar!"));
 
-        this.setItem(3, BukkitUtils.deserializeItemStack("REDSTONE : 1 : nome>&aViolência : desc>&7Ative ou desative as partículas\n&7de sangue no PvP."));
-        this.setItem(12, BukkitUtils.deserializeItemStack(
+        this.setItem(14, BukkitUtils.deserializeItemStack("REDSTONE : 1 : nome>&aViolência : desc>&7Ative ou desative as partículas\n&7de sangue no PvP."));
+        this.setItem(23, BukkitUtils.deserializeItemStack(
                 "INK_SACK:" + container.getInkColor(PreferenceEnum.BLOOD_AND_GORE) + " : 1 : nome>" + container.getStateName(PreferenceEnum.BLOOD_AND_GORE) + " : desc>&fEstado: &7" + container.getStateName(PreferenceEnum.BLOOD_AND_GORE, true) + "\n \n&eClique para modificar!"));
 
-        this.setItem(4, BukkitUtils.deserializeItemStack("NETHER_STAR : 1 : nome>&aProteção no /lobby : desc>&7Ative ou desative o pedido de\n&7confirmação ao utilizar /lobby."));
-        this.setItem(13, BukkitUtils.deserializeItemStack(
+        this.setItem(15, BukkitUtils.deserializeItemStack("NETHER_STAR : 1 : nome>&aProteção no /lobby : desc>&7Ative ou desative o pedido de\n&7confirmação ao utilizar /lobby."));
+        this.setItem(24, BukkitUtils.deserializeItemStack(
                 "INK_SACK:" + container.getInkColor(PreferenceEnum.PROTECTION_LOBBY) + " : 1 : nome>" + container.getStateName(PreferenceEnum.PROTECTION_LOBBY) + " : desc>&fEstado: &7" + container.getStateName(PreferenceEnum.PROTECTION_LOBBY, true) + "\n \n&eClique para modificar!"));
 
 
-        this.setItem(49, BukkitUtils.deserializeItemStack("ARROW : 1 : nome>&cVoltar"));
+        this.setItem(40, BukkitUtils.deserializeItemStack("ARROW : 1 : nome>&cVoltar"));
 
 
         this.register(Core.getInstance());
@@ -77,7 +77,7 @@ public class MenuPreferences extends PlayerMenu {
                     if (item != null && item.getType() != Material.AIR) {
                         PreferencesContainer container = profile.loadPreferencesContainer();
                         switch (evt.getSlot()) {
-                            case 10: {
+                            case 20: {
                                 EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
                                 container.changePreference(PreferenceEnum.PLAYER_VISIBILITY);
                                 if (!profile.playingGame()) {
@@ -87,35 +87,35 @@ public class MenuPreferences extends PlayerMenu {
                                 break;
                             }
 
-                            case 11: {
+                            case 21: {
                                 EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
                                 container.changePreference(PreferenceEnum.PRIVATE_MESSAGES);
                                 new MenuPreferences(profile);
                                 break;
                             }
 
-                            case 12: {
+                            case 23: {
                                 EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
                                 container.changePreference(PreferenceEnum.BLOOD_AND_GORE);
                                 new MenuPreferences(profile);
                                 break;
                             }
 
-                            case 13: {
+                            case 24: {
                                 EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
                                 container.changePreference(PreferenceEnum.PROTECTION_LOBBY);
                                 new MenuPreferences(profile);
                                 break;
                             }
 
-                            case 49: {
+                            case 40: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
                                 new MenuProfile(profile);
-                                return;
+                                break;
                             }
 
                             default: {
-                                if (evt.getSlot() == 1 || evt.getSlot() == 2 || evt.getSlot() == 3 || evt.getSlot() == 4 || evt.getSlot() == 5 || evt.getSlot() == 6 || evt.getSlot() == 7 || evt.getSlot() == 28|| evt.getSlot() == 29 || evt.getSlot() == 30) {
+                                if (evt.getSlot() == 10 || evt.getSlot() == 11 || evt.getSlot() == 12 || evt.getSlot() == 14 || evt.getSlot() == 15 || evt.getSlot() == 16) {
                                     EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
                                 }
                                 break;

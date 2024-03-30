@@ -48,7 +48,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 /**
  * @author Maxter
  */
@@ -261,7 +260,7 @@ public class NMS1_8R3 implements INMS {
 
         if (entity.onGround) {
           f5 = entity.world.getType(new BlockPosition(MathHelper.floor(entity.locX), MathHelper.floor(entity.getBoundingBox().b) - 1, MathHelper.floor(entity.locZ)))
-            .getBlock().frictionFactor * 0.91F;
+                  .getBlock().frictionFactor * 0.91F;
         }
 
         float f6 = 0.162771F / (f5 * f5 * f5);
@@ -276,7 +275,7 @@ public class NMS1_8R3 implements INMS {
         f5 = 0.91F;
         if (entity.onGround) {
           f5 = entity.world.getType(new BlockPosition(MathHelper.floor(entity.locX), MathHelper.floor(entity.getBoundingBox().b) - 1, MathHelper.floor(entity.locZ)))
-            .getBlock().frictionFactor * 0.91F;
+                  .getBlock().frictionFactor * 0.91F;
         }
 
         if (entity.k_()) {
@@ -301,7 +300,7 @@ public class NMS1_8R3 implements INMS {
         }
 
         if (entity.world.isClientSide && (!entity.world.isLoaded(new BlockPosition((int) entity.locX, 0, (int) entity.locZ)) || !entity.world
-          .getChunkAtWorldCoords(new BlockPosition((int) entity.locX, 0, (int) entity.locZ)).o())) {
+                .getChunkAtWorldCoords(new BlockPosition((int) entity.locX, 0, (int) entity.locZ)).o())) {
           if (entity.locY > 0.0D) {
             entity.motY = -0.1D;
           } else {
@@ -484,7 +483,7 @@ public class NMS1_8R3 implements INMS {
 
         Bukkit.getScheduler().runTaskLater(Core.getInstance(), () -> {
           con.sendPacket(new PacketPlayOutRespawn(players.getWorld().getEnvironment().getId(), epOn.getWorld().getDifficulty(), epOn.getWorld().getWorldData().getType(),
-            epOn.playerInteractManager.getGameMode()));
+                  epOn.playerInteractManager.getGameMode()));
 
           player.setAllowFlight(allow);
           if (flying) {

@@ -58,4 +58,8 @@ public class SkyWarsStatsInformation extends DataCollection {
     public <T> T getInformation(String key) throws ParseException {
         return (T) getAsJsonObject().get(key);
     }
+
+    public <T> T getInformation(String key, Class<T> tClass) throws ParseException {
+        return (T) getAsJsonObject().get(key);
+    }
 }

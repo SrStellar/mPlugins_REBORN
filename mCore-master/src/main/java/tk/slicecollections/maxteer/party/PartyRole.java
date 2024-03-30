@@ -1,19 +1,15 @@
 package tk.slicecollections.maxteer.party;
 
-/**
- * @author Maxter
- */
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum PartyRole {
+
   MEMBER("Membro"),
   LEADER("Líder");
 
-  private String name;
+  private final String name;
 
-  PartyRole(String name) {
-    this.name = name;
-  }
-
-  public String getName() {
-    return this.name;
-  }
 }

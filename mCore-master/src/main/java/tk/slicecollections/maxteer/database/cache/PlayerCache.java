@@ -16,8 +16,8 @@ public class PlayerCache {
     private final List<Data> DATA_CACHE = new ArrayList<>();
 
     public void setupDataCache() {
-        DATA_CACHE.add(new ProfileCache(playerKey).setupTables());
-        DATA_CACHE.add(new SkyWarsCache(playerKey).setupTables());
+        DATA_CACHE.add(new ProfileCache(playerKey));
+        DATA_CACHE.add(new SkyWarsCache(playerKey));
     }
 
     public List<Data> listDataCache() {

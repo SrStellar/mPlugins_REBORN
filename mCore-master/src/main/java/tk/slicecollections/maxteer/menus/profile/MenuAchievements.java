@@ -27,10 +27,8 @@ import java.util.Map;
 
 public class MenuAchievements extends PagedPlayerMenu {
 
-    private final Map<ItemStack, Achievement> achievements = new HashMap<>();
-
     @SneakyThrows
-    public MenuAchievements(Profile profile) {
+    public MenuAchievements(Profile profile, Class<? extends Achievement> clazz) {
         super(profile.getPlayer(), "Títulos", 5);
         this.previousPage = 36;
         this.nextPage = 44;
@@ -40,9 +38,8 @@ public class MenuAchievements extends PagedPlayerMenu {
 
         List<ItemStack> items = new ArrayList<>();
         List<ItemStack> sub = new ArrayList<>();
-        for (Achievement achievements : Achievement.listAchievements()) {
+        for (Achievement achievements : Achievement.listByClass(clazz)) {
             ItemStack item = achievements.getIcon(profile);
-            this.achievements.put(item, achievements);
             if (achievements.hasCompleted(profile)) {
                 items.add(item);
                 continue;
@@ -82,38 +79,17 @@ public class MenuAchievements extends PagedPlayerMenu {
                     ItemStack item = evt.getCurrentItem();
 
                     if (item != null && item.getType() != Material.AIR) {
-                        SelectedInformation container = profile.getCache().loadTableCache(ProfileCache.class).loadCollection(SelectedInformation.class);
                         if (evt.getSlot() == 40) {
                             EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                            new MenuProfile(profile);
+                            new MenuAchievementsList(profile);
+                        } else if (evt.getSlot() == this.previousPage) {
+                            EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
+                            this.openPrevious();
+                        } else if (evt.getSlot() == this.nextPage) {
+                            EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
+                            this.openNext();
                         } else {
-                            if (evt.getSlot() == this.previousPage) {
-                                EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                this.openPrevious();
-                            } else if (evt.getSlot() == this.nextPage) {
-                                EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                this.openNext();
-                            } else {
-/*                                Title title = this.titles.get(item);
-                                if (title != null) {
-                                    if (!title.has(profile)) {
-                                        EnumSound.ENDERMAN_TELEPORT.play(this.player, 0.5F, 1.0F);
-                                        return;
-                                    }
-
-                                    EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
-                                    Title selected = TitleManager.getTitleSelected(profile);
-                                    if (title.equals(selected)) {
-                                        container.setSelectedTitle(null);
-                                        title.destroy(profile);
-                                    } else {
-                                        container.setSelectedTitle(title);
-                                        title.setSelected(profile);
-                                    }
-
-                                    new MenuAchievements(profile);
-                                }*/
-                            }
+                            EnumSound.ITEM_PICKUP.play(this.player, 0.5F, 2.0F);
                         }
                     }
                 }

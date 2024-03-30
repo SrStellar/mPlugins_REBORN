@@ -6,7 +6,7 @@ import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInform
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
 import tk.slicecollections.maxteer.player.Profile;
 
-public class CoinsCommand extends Commands{
+public class CoinsCommand extends Commands {
     public CoinsCommand() {
         super("coins");
     }
@@ -19,6 +19,6 @@ public class CoinsCommand extends Commands{
         }
 
         Profile profile = Profile.loadProfile(sender.getName());
-        sender.sendMessage("§fSeus coins:\n \n §8• §fSkyWars: §e" + profile.getCache().loadTableCache(SkyWarsCache.class).loadCollectionGeneric(CoinsGenericInformation.class, "coins").getCoins());
+        sender.sendMessage("§fSeus coins:\n \n §8• §fSkyWars: §e" + profile.getCache().loadTableCache(SkyWarsCache.class).loadCollectionGeneric(CoinsGenericInformation.class, "coins").getCoins() + "\n §8• §fTheBridge: §e0 §8• §fMurder: §e0");
     }
 }

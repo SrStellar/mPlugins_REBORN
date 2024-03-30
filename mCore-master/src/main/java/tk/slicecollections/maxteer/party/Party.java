@@ -1,5 +1,6 @@
 package tk.slicecollections.maxteer.party;
 
+import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -31,6 +32,7 @@ public abstract class Party {
    */
   private static final long MINUTES_UNTIL_EXPIRE_INVITE = 1L;
 
+  @Getter
   private int slots;
   private boolean isOpen;
   protected PartyPlayer leader;
@@ -52,7 +54,7 @@ public abstract class Party {
   }
 
   public void invite(Object target) {
-    String leader = "Role.getPrefixed(this.getLeader())";
+    String leader = Role.getPrefixed(this.getLeader());
     this.invitesMap.put(Manager.getName(target).toLowerCase(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(MINUTES_UNTIL_EXPIRE_INVITE));
     BaseComponent component = new TextComponent("");
     for (BaseComponent components : TextComponent.fromLegacyText(" \n" + leader + " §aconvidou você para a Party dele!\n§7Você pode ")) {
@@ -82,11 +84,11 @@ public abstract class Party {
 
   public void reject(String member) {
     this.invitesMap.remove(member.toLowerCase());
-
+    this.leader.sendMessage(" \n" + Role.getPrefixed(member) + " §anegou seu convite de Party!\n ");
   }
 
   public void join(String member) {
-
+    this.broadcast(" \n" + Role.getPrefixed(member) + " §aentrou na Party!\n ");
     this.members.add(new PartyPlayer(member, MEMBER));
     this.invitesMap.remove(member.toLowerCase());
   }
@@ -99,11 +101,18 @@ public abstract class Party {
       return;
     }
 
-
+    String prefixed = Role.getPrefixed(member);
+    if (leader.equals(member)) {
+      this.leader = this.members.get(0);
+      this.leader.setRole(LEADER);
+      this.broadcast(" \n" + prefixed + " §ase tornou o novo Líder da Party!\n ");
+    }
+    this.broadcast(" \n" + prefixed + " §asaiu da Party!\n ");
   }
 
   public void kick(String member) {
     this.members.stream().filter(pp -> pp.getName().equalsIgnoreCase(member)).findFirst().ifPresent(pp -> {
+      pp.sendMessage(" \n" + Role.getPrefixed(this.getLeader()) + " §aexpulsou você da Party!\n ");
       this.members.removeIf(pap -> pap.equals(pp));
     });
   }
@@ -151,10 +160,6 @@ public abstract class Party {
     this.lastOnlineTime = 0L;
   }
 
-  public int getSlots() {
-    return this.slots;
-  }
-
   public long onlineCount() {
     return this.members.stream().filter(PartyPlayer::isOnline).count();
   }
@@ -164,7 +169,7 @@ public abstract class Party {
   }
 
   public String getName(String name) {
-    return this.members.stream().filter(pp -> pp.getName().equalsIgnoreCase(name)).map(PartyPlayer::getName).findAny().orElse(name);
+    return this.members.stream().map(PartyPlayer::getName).filter(ppName -> ppName.equalsIgnoreCase(name)).findAny().orElse(name);
   }
 
   public PartyPlayer getPlayer(String name) {
@@ -176,7 +181,7 @@ public abstract class Party {
   }
 
   public boolean canJoin() {
-    return this.members.size() < this.slots;
+    return this.members.size() >= this.slots;
   }
 
   public boolean isInvited(String name) {

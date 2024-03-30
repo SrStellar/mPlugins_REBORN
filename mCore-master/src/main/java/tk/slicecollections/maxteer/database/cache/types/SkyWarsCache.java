@@ -102,7 +102,7 @@ public class SkyWarsCache extends Data {
 
     @Override
     public void saveValueCollections(boolean asyncTask) {
-        Runnable task = ()-> listCollections().forEach(collectionCache -> listCollections().forEach(DataCollectionsInterface::saveValue));
+        Runnable task = ()-> listCollections().forEach(DataCollectionsInterface::saveValue);
 
         if (asyncTask) {
             Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
