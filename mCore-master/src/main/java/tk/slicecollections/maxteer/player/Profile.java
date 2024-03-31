@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.Data;
@@ -21,6 +22,7 @@ import tk.slicecollections.maxteer.game.Game;
 import tk.slicecollections.maxteer.game.GameTeam;
 import tk.slicecollections.maxteer.cash.CashManager;
 import tk.slicecollections.maxteer.hook.FriendsHook;
+import tk.slicecollections.maxteer.player.boosters.BoosterContainer;
 import tk.slicecollections.maxteer.player.hotbar.Hotbar;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.preferences.PreferencesContainer;
@@ -249,7 +251,7 @@ public class Profile {
         return this.player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(@NotNull Player player) {
         this.player = player;
         UUID_CACHE.put(this.name.toLowerCase(), player.getUniqueId());
     }
@@ -284,6 +286,10 @@ public class Profile {
 
     public DeliveryContainer loadDeliveryContainer() {
         return new DeliveryContainer(this);
+    }
+
+    public BoosterContainer loadBoosterContainer() {
+        return new BoosterContainer(this);
     }
 
     public AchievementsInformation loadAchievementsContainer() {

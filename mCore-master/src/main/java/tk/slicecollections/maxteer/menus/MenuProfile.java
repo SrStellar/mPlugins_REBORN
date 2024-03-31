@@ -13,6 +13,8 @@ import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.libraries.menu.PlayerMenu;
 import tk.slicecollections.maxteer.menus.profile.*;
+import tk.slicecollections.maxteer.menus.profile.Achievements.MenuAchievementsList;
+import tk.slicecollections.maxteer.menus.profile.booster.MenuBoostersList;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
@@ -101,7 +103,7 @@ public class MenuProfile extends PlayerMenu {
 
                             case 15: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                //new MenuBoosters(profile);
+                                new MenuBoostersList(profile);
                                 break;
                             }
 

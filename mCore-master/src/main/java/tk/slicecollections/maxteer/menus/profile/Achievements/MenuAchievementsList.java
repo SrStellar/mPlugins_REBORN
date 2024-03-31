@@ -1,8 +1,7 @@
-package tk.slicecollections.maxteer.menus.profile;
+package tk.slicecollections.maxteer.menus.profile.Achievements;
 
 import lombok.SneakyThrows;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,7 +18,6 @@ import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MenuAchievementsList extends PlayerMenu {
 

@@ -2,7 +2,10 @@ package tk.slicecollections.maxteer.cmd;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import tk.slicecollections.maxteer.boosters.Booster;
+import tk.slicecollections.maxteer.boosters.BoosterType;
 import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
@@ -83,6 +86,78 @@ public class TestCmd extends Commands{
             case "addCoins": {
                 profile.getCache().loadTableCache(SkyWarsCache.class).loadCollectionGeneric(CoinsGenericInformation.class, "coins").addCoins(10D);
                 sender.sendMessage("§aAdicionado com sucesso!");
+                break;
+            }
+
+            case "addBooster": {
+                profile.loadBoosterContainer().addBooster(BoosterType.PRIVATE, 1L, 2.0);
+                sender.sendMessage("§aBooster adicionado a essa conta com sucesso!");
+                break;
+            }
+
+            case "addBoosterNet": {
+                profile.loadBoosterContainer().addBooster(BoosterType.NETWORK, 1L, 2.0);
+                sender.sendMessage("§aBooster adicionado a essa conta com sucesso!");
+                break;
+            }
+
+            case "listBoosters": {
+                StringBuilder sb = new StringBuilder();
+                for (Booster booster : profile.loadBoosterContainer().listAllBoosters()) {
+                    sb.append("§fTipo: §a").append(booster.getBoosterType().name().toUpperCase())
+                            .append("\n")
+                            .append("§fID: §a").append(booster.getId())
+                            .append("\n")
+                            .append("§fTempo: §a").append(booster.getTimeFormatted())
+                            .append("\n")
+                            .append("§fMultiplicador: §a").append(booster.getMultiply())
+                            .append("\n");
+                }
+
+                sender.sendMessage("§aSeus boosters:\n" + sb);
+                break;
+            }
+
+            case "ativarBooster": {
+                if (profile.loadBoosterContainer().listAllBoosters(BoosterType.PRIVATE).isEmpty()) {
+                    sender.sendMessage("§cVocê não possui nenhum booster ativo!");
+                    return;
+                }
+
+                if (profile.loadBoosterContainer().hasBoosterActivated()) {
+                    sender.sendMessage("§eVocê já possui um booster ativo!");
+                    return;
+                }
+
+                profile.loadBoosterContainer().activateBooster(profile.loadBoosterContainer().listAllBoosters(BoosterType.PRIVATE).get(0));
+                sender.sendMessage("§aBooster ativo com sucesso!");
+                break;
+            }
+
+            case "ativarBoosterNet": {
+                if (profile.loadBoosterContainer().listAllBoosters(BoosterType.NETWORK).isEmpty()) {
+                    sender.sendMessage("§cVocê não possui nenhum booster ativo!");
+                    return;
+                }
+
+                if (profile.loadBoosterContainer().hasBoosterActivated()) {
+                    sender.sendMessage("§eVocê já possui um booster ativo!");
+                    return;
+                }
+
+                profile.loadBoosterContainer().activateBooster(profile.loadBoosterContainer().listAllBoosters(BoosterType.NETWORK).get(0));
+                sender.sendMessage("§aBooster ativo com sucesso!");
+                break;
+            }
+
+            case "verBoosterAtivo": {
+                JSONObject response = profile.loadBoosterContainer().getBoosterActivated();
+                if (response == null) {
+                    sender.sendMessage("§cVocê não possui nenhum booster ativo! :(");
+                    return;
+                }
+
+                sender.sendMessage("§fBooster ativo:\n§fTempo restante: §a" + profile.loadBoosterContainer().getBoosterTimeRemaining() + "\n§fMultiplicador: §a" + response.get("multiply") + "x");
                 break;
             }
         }

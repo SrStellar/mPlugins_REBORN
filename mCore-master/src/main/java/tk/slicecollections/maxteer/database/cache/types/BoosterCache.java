@@ -1,44 +1,36 @@
 package tk.slicecollections.maxteer.database.cache.types;
 
 import org.bukkit.Bukkit;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
-import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
-import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
-import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
-import tk.slicecollections.maxteer.database.cache.collections.TitleInformation;
+import tk.slicecollections.maxteer.database.cache.collections.BoosterNetworkInformation;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
-import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ProfileCache extends Data {
+public class BoosterCache extends Data {
 
-    public ProfileCache(String playerKey) {
-        super("mCoreProfile", playerKey);
+    public BoosterCache(String minigame) {
+        super("mCoreBooster", minigame);
         setupTables();
-        setupCollections(ProfileInformation.class, SelectedInformation.class, TitleInformation.class, AchievementsInformation.class);
+        setupCollections(BoosterNetworkInformation.class);
     }
 
     @Override
     public Data setupTables() {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
-            ((MySQL) Database.getInstance()).setupTable(this.tableName, "`name` VARCHAR(32) PRIMARY KEY NOT NULL, ",
-                    "`informations` TEXT, ",
-                    "`titles` VARCHAR(255), ",
-                    "`boosters` VARCHAR(255), ",
-                    "`achievements` VARCHAR(255), ",
-                    "`selected` VARCHAR(255)");
+            ((MySQL) Database.getInstance()).setupTable(this.tableName, "`minigame` VARCHAR(32) PRIMARY KEY NOT NULL, ",
+                    "`booster` VARCHAR(255)");
         }
 
         return this;
@@ -67,7 +59,6 @@ public class ProfileCache extends Data {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void loadValueCollections(boolean asyncTask) {
         Runnable task = () -> {
             DataTypes type = Database.getInstance().getType();
@@ -75,9 +66,9 @@ public class ProfileCache extends Data {
             if (type.equals(DataTypes.MYSQL)) {
                 MySQL mySQL = ((MySQL) Database.getInstance());
                 List<String> columns = listCollections().stream().map(DataCollection::getColumnName).collect(Collectors.toList());
-                collectionsValue = mySQL.getValueColumn(this.tableName, "name = '" + this.playerKey + "'", columns);
+                collectionsValue = mySQL.getValueColumn(this.tableName, "minigame = '" + this.playerKey + "'", columns);
                 if (collectionsValue.isEmpty()) {
-                    mySQL.insertValue(this.tableName, "name", this.playerKey);
+                    mySQL.insertValue(this.tableName, "minigame", this.playerKey);
                 }
             } else {
                 collectionsValue = null;
@@ -85,19 +76,8 @@ public class ProfileCache extends Data {
 
             listCollections().forEach(collectionCache -> {
                 if (collectionsValue != null && !collectionsValue.isEmpty() && collectionsValue.get(collectionCache.getColumnName()) != null) {
-                    try { //Verifica se é um JSON valido e se existe alguma key nova que não está registrada nos valores do jogador
-                        JSONObject plyObject = (JSONObject) new JSONParser().parse(collectionsValue.get(collectionCache.getColumnName()).toString());
-                        JSONObject defaultObject = (JSONObject) new JSONParser().parse(collectionCache.getDefaultValue().toString());
-                        List<Object> noHasKey = Arrays.stream(defaultObject.keySet().toArray()).filter(key -> !plyObject.containsKey(key)).collect(Collectors.toList());
-                        if (!noHasKey.isEmpty()) {
-                            noHasKey.forEach(key -> plyObject.put(key, defaultObject.get(key)));
-                        }
-                        collectionCache.updateValue(plyObject);
-                        return;
-                    } catch (Exception ignored) {
-                        collectionCache.updateValue(collectionsValue.get(collectionCache.getColumnName()));
-                        return;
-                    }
+                    collectionCache.updateValue(collectionsValue.get(collectionCache.getColumnName()));
+                    return;
                 }
 
                 collectionCache.updateValue(collectionCache.getDefaultValue());

@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BukkitPartySizer {
-
   private static final MConfig CONFIG;
   private static final Map<String, Integer> SIZES;
 
@@ -35,6 +34,6 @@ public class BukkitPartySizer {
       }
     }
 
-    return 3;
+    return CONFIG.getInt("party.default_size");
   }
 }

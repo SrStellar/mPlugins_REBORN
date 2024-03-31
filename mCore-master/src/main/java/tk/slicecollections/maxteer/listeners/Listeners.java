@@ -88,19 +88,12 @@ public class Listeners implements Listener {
   public void onPlayerQuit(PlayerQuitEvent evt) {
     Profile profile = Profile.loadProfile(evt.getPlayer().getName());
     if (profile != null) {
-      try {
-        profile.getCache().loadTableCache(ProfileCache.class).loadCollection(SelectedInformation.class).getSelectedTitle();
-      } catch (ParseException e) {
-        throw new RuntimeException(e);
-      }
       TitleManager.leaveServer(profile);
       if (profile.getGame() != null) {
         profile.getGame().leave(profile, profile.getGame());
       }
-      if (!((CraftServer) Bukkit.getServer()).getHandle().getServer().isRunning() || RESTART_WATCHDOG_STOPPING.get(RESTART_WATCHDOG.get(null))) {
-        profile.saveSync();
-      } else {
-        profile.save();
+      if (((CraftServer) Bukkit.getServer()).getHandle().getServer().isRunning() || !RESTART_WATCHDOG_STOPPING.get(RESTART_WATCHDOG.get(null))) {
+        profile.save(); //Evita salvar duas vezes a mesma coisa em caso de reinicialização do servidor
       }
 
       profile.destroy();
@@ -139,7 +132,7 @@ public class Listeners implements Listener {
     String format = String.format(evt.getFormat(), player.getName(), evt.getMessage());
 
     String current = Manager.getCurrent(player.getName());
-    Role role = Role.findRoleByPermission(player);
+    Role role = FakeManager.isFake(player.getName()) ? FakeManager.getRole(player.getName()) : Role.findRoleByPermission(player);
     TextComponent component = new TextComponent("");
     for (BaseComponent components : TextComponent.fromLegacyText(format)) {
       component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + current + " "));

@@ -25,7 +25,7 @@ fake:
 party:
   # Tamanho da party por permissão
   # (_) é igual a (.)
-  # Tamanho padrão: 3
+  default_size: 3 #Tamanho padrão
   size:
     role_master: 20
     role_youtuber: 15

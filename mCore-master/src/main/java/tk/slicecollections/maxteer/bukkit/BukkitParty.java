@@ -10,7 +10,7 @@ public class BukkitParty extends Party {
 
   @Override
   public void delete() {
-    BukkitPartyManager.listParties().remove(this);
+    BukkitPartyManager.getBUKKIT_PARTIES().remove(this);
     this.destroy();
   }
 }

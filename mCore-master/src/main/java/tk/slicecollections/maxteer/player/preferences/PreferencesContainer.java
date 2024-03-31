@@ -23,15 +23,12 @@ public class PreferencesContainer extends ContainerAbstract {
     }
 
     @Override
+    @SneakyThrows
     public void load() {
-        try {
-            JSONObject preferencesCurrent = loadPreferencesJSON();
-            List<Integer> noHasID = Arrays.stream(PreferenceEnum.values()).map(PreferenceEnum::getId).filter(id -> !preferencesCurrent.containsKey(String.valueOf(id))).collect(Collectors.toList());
-            noHasID.forEach(integer -> preferencesCurrent.put(integer, true));
-            loadProfileInformation().updateValue("preferences", preferencesCurrent);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        JSONObject preferencesCurrent = loadPreferencesJSON();
+        List<Integer> noHasID = Arrays.stream(PreferenceEnum.values()).map(PreferenceEnum::getId).filter(id -> !preferencesCurrent.containsKey(String.valueOf(id))).collect(Collectors.toList());
+        noHasID.forEach(integer -> preferencesCurrent.put(integer, true));
+        loadProfileInformation().updateValue("preferences", preferencesCurrent);
     }
 
     public boolean getPreference(PreferenceEnum preference) {
@@ -62,20 +59,19 @@ public class PreferencesContainer extends ContainerAbstract {
         boolean state = getPreference(preferenceEnum);
         return state ? "5" : "14";
     }
-    public void changePreference(PreferenceEnum preference) {
-        try {
-            JSONObject preferencesJSON = loadPreferencesJSON();
-            if (getPreference(preference)) {
-                preferencesJSON.put(preference.getId(), false);
-            } else {
-                preferencesJSON.put(preference.getId(), true);
-            }
 
-            updateInformation(preferencesJSON);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+    @SneakyThrows
+    public void changePreference(PreferenceEnum preference) {
+        JSONObject preferencesJSON = loadPreferencesJSON();
+        if (getPreference(preference)) {
+            preferencesJSON.put(preference.getId(), false);
+        } else {
+            preferencesJSON.put(preference.getId(), true);
         }
+
+        updateInformation(preferencesJSON);
     }
+
     private ProfileInformation loadProfileInformation() {
         return loadCollection(ProfileInformation.class);
     }

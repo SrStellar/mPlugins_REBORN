@@ -1,4 +1,4 @@
-package tk.slicecollections.maxteer.menus.profile;
+package tk.slicecollections.maxteer.menus.profile.Achievements;
 
 import lombok.SneakyThrows;
 import org.bukkit.Material;
@@ -10,20 +10,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.achievements.Achievement;
-import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
-import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.libraries.menu.PagedPlayerMenu;
-import tk.slicecollections.maxteer.menus.MenuProfile;
+import tk.slicecollections.maxteer.menus.profile.Achievements.MenuAchievementsList;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.titles.Title;
-import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MenuAchievements extends PagedPlayerMenu {
 

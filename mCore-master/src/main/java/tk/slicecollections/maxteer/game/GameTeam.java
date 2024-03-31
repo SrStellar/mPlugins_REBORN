@@ -1,5 +1,6 @@
 package tk.slicecollections.maxteer.game;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,11 +17,12 @@ import java.util.stream.Collectors;
  */
 public class GameTeam {
 
+  @Getter
   private String name;
-  private int size;
-  private Game<?> game;
-  private String location;
-  private List<UUID> members;
+  private final int size;
+  private final Game<?> game;
+  private final String location;
+  private final List<UUID> members;
 
   private static final String[] ALPHABET = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
@@ -42,10 +44,6 @@ public class GameTeam {
 
   public void removeMember(Player player) {
     this.members.remove(player.getUniqueId());
-  }
-
-  public String getName() {
-    return this.name;
   }
 
   public Game<?> getGame() {

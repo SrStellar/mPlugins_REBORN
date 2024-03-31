@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.achievements.Achievement;
+import tk.slicecollections.maxteer.boosters.NetworkManager;
 import tk.slicecollections.maxteer.cmd.Commands;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
@@ -137,6 +138,7 @@ public class Core extends MPlugin {
     Commands.setupCommands();
     Listeners.setupListeners();
     Achievement.setupAchievements();
+    NetworkManager.setupNetworkManager();
 
     ProtocolLibrary.getProtocolManager().addPacketListener(new FakeAdapter());
     ProtocolLibrary.getProtocolManager().addPacketListener(new NPCAdapter());
@@ -152,6 +154,7 @@ public class Core extends MPlugin {
   @Override
   public void disable() {
     Profile.listProfiles().forEach(Profile::saveSync);
+    NetworkManager.destroyNetworkBoosters();
     Database.getInstance().destroyConnection();
     this.getLogger().info("O plugin foi desativado.");
   }

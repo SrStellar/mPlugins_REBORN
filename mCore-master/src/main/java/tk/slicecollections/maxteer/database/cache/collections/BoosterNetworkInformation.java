@@ -6,14 +6,12 @@ import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
-import tk.slicecollections.maxteer.player.role.Role;
-import tk.slicecollections.maxteer.utils.StringUtils;
 
 @SuppressWarnings("unchecked")
-public class ProfileInformation extends DataCollection {
+public class BoosterNetworkInformation extends DataCollection {
 
-    public ProfileInformation(String playerKey) {
-        super("informations", "mCoreProfile", null, playerKey);
+    public BoosterNetworkInformation(String minigame) {
+        super("booster", "mCoreBooster", null, minigame);
     }
 
     @Override
@@ -21,8 +19,8 @@ public class ProfileInformation extends DataCollection {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            if (!mySQL.existsColumn("mCoreProfile", "informations")) {
-                mySQL.addColumn("mCoreProfile", "informations");
+            if (!mySQL.existsColumn("mCoreBooster", "booster")) {
+                mySQL.addColumn("mCoreBooster", "booster");
             }
         }
     }
@@ -30,14 +28,9 @@ public class ProfileInformation extends DataCollection {
     @Override
     public Object getDefaultValue() {
         JSONObject defaultObject = new JSONObject();
-        defaultObject.put("cash", 0L);
-        defaultObject.put("role", StringUtils.stripColors(Role.getDefaultRole().getName()));
-        defaultObject.put("deliveries", new JSONObject());
-        defaultObject.put("preferences", new JSONObject());
-        defaultObject.put("boosters", new JSONObject());
-        defaultObject.put("booster", new JSONObject());
-        defaultObject.put("created", "");
-        defaultObject.put("lastLogin", "");
+        defaultObject.put("time", 0L);
+        defaultObject.put("multiply", 1.0);
+        defaultObject.put("owner", "");
         return defaultObject.toJSONString();
     }
 
@@ -46,7 +39,7 @@ public class ProfileInformation extends DataCollection {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "name = '" + this.getPlayerKey() + "'");
+            mySQL.updateColumn(this.getTableName(), this.getColumnName(), this.getValue(), "minigame = '" + this.getPlayerKey() + "'");
         }
     }
 

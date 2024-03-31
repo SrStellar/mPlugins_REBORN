@@ -12,7 +12,7 @@ public class FakeGame implements Game<GameTeam> {
 
   private FakeGame() {}
 
-  private List<Player> emptyList = new ArrayList<>(0);
+  private final List<Player> emptyList = new ArrayList<>(0);
 
   @Override
   public void broadcastMessage(String s) { }

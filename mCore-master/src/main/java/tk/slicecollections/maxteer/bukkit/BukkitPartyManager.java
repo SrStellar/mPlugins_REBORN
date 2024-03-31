@@ -1,6 +1,7 @@
 package tk.slicecollections.maxteer.bukkit;
 
 import com.google.common.collect.ImmutableList;
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -13,6 +14,8 @@ import java.util.List;
 public class BukkitPartyManager {
 
   private static BukkitTask CLEAN_PARTIES;
+
+  @Getter
   private static final List<BukkitParty> BUKKIT_PARTIES = new ArrayList<>();
 
   public static BukkitParty createParty(Player leader) {
@@ -40,9 +43,5 @@ public class BukkitPartyManager {
 
   public static BukkitParty getMemberParty(String player) {
     return BUKKIT_PARTIES.stream().filter(bp -> bp.isMember(player)).findAny().orElse(null);
-  }
-
-  public static List<BukkitParty> listParties() {
-    return BUKKIT_PARTIES;
   }
 }
