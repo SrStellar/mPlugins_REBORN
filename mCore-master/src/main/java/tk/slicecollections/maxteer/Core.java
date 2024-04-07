@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.boosters.NetworkManager;
 import tk.slicecollections.maxteer.cmd.Commands;
@@ -124,7 +125,7 @@ public class Core extends MPlugin {
     Database.setupDatabase(DataTypes.MYSQL, this.getConfig().getString("database.mysql.nome"),
             this.getConfig().getString("database.mysql.usuario"),
             this.getConfig().getString("database.mysql.senha"),
-            this.getConfig().getString("database.mysql.host") + ":" +this.getConfig().getString("database.mysql.porta"));
+            this.getConfig().getString("database.mysql.host") + ":" + this.getConfig().getString("database.mysql.porta"));
 
     new MCoreExpansion().register();
 
@@ -201,5 +202,10 @@ public class Core extends MPlugin {
 
       queue.queue(player, profile, name);
     }
+  }
+
+  //Ele seta automaticamente qual é o minigame baseado no nome do plugin
+  public static void indentifyPluginType(JavaPlugin mainInstance) {
+    minigames.stream().filter(s -> mainInstance.getDescription().getName().toLowerCase().contains(s.replace(" ", "").toLowerCase())).findFirst().ifPresent(s -> minigame = s);
   }
 }

@@ -3,6 +3,7 @@ package tk.slicecollections.maxteer.database.cache;
 import lombok.RequiredArgsConstructor;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
+import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PlayerCache {
     public void setupDataCache() {
         DATA_CACHE.add(new ProfileCache(playerKey));
         DATA_CACHE.add(new SkyWarsCache(playerKey));
+        DATA_CACHE.add(new TheBridgeCache(playerKey));
     }
 
     public List<Data> listDataCache() {

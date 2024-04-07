@@ -7,6 +7,7 @@ import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.achievements.AchievementReward;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
+import tk.slicecollections.maxteer.database.cache.collections.TheBridgeStatsInformation;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.titles.Title;
 import tk.slicecollections.maxteer.titles.TitleManager;
@@ -15,12 +16,12 @@ import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.Objects;
 
-public class SkyWarsAchievement extends Achievement {
+public class TheBridgeAchievement extends Achievement {
 
     public static void setupAchievements() {
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Assassino (Solo)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "1v1kills",
                 50L,
                 "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &6100 Coins\n \n&fProgresso: %progress%",
@@ -28,9 +29,9 @@ public class SkyWarsAchievement extends Achievement {
                 100L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Assassino Mestre (Solo)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "1v1kills",
                 250L,
                 "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &6500 Coins\n \n&fProgresso: %progress%",
@@ -38,9 +39,9 @@ public class SkyWarsAchievement extends Achievement {
                 500L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Vitorioso (Solo)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "1v1wins",
                 50L,
                 "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
@@ -48,9 +49,9 @@ public class SkyWarsAchievement extends Achievement {
                 250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Vitorioso Mestre (Solo)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "1v1wins",
                 200L,
                 "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &61000 Coins\n \n&fProgresso: %progress%",
@@ -58,29 +59,29 @@ public class SkyWarsAchievement extends Achievement {
                 1000L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Assistente (Solo)",
-                SkyWarsStatsInformation.class,
-                "1v1assists",
-                50L,
-                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &6100 Coins\n \n&fProgresso: %progress%",
-                AchievementReward.COINS,
-                100L,
-                null));
-
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Assistente Mestre (Solo)",
-                SkyWarsStatsInformation.class,
-                "1v1assists",
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Pontuador (Solo)",
+                TheBridgeStatsInformation.class,
+                "1v1points",
                 250L,
-                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &6500 Coins\n \n&fProgresso: %progress%",
+                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7pontos para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
                 AchievementReward.COINS,
-                500L,
+                250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Pontuador Mestre (Solo)",
+                TheBridgeStatsInformation.class,
+                "1v1points",
+                1000L,
+                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7pontos para receber:\n \n &8• &61000 Coins\n \n&fProgresso: %progress%",
+                AchievementReward.COINS,
+                1000L,
+                null));
+
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Persistente (Solo)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "1v1games",
                 250L,
                 "%material% : 1 : nome>%name% : desc>&7Jogue um total de %reach%\n&7partidas para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
@@ -88,9 +89,9 @@ public class SkyWarsAchievement extends Achievement {
                 250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Assassino (Dupla)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "2v2kills",
                 50L,
                 "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &6100 Coins\n \n&fProgresso: %progress%",
@@ -98,9 +99,9 @@ public class SkyWarsAchievement extends Achievement {
                 100L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Assassino Mestre (Dupla)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "2v2kills",
                 250L,
                 "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &6500 Coins\n \n&fProgresso: %progress%",
@@ -108,9 +109,9 @@ public class SkyWarsAchievement extends Achievement {
                 500L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Vitorioso (Dupla)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "2v2wins",
                 50L,
                 "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
@@ -118,9 +119,9 @@ public class SkyWarsAchievement extends Achievement {
                 250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Vitorioso Mestre (Dupla)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "2v2wins",
                 200L,
                 "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &61000 Coins\n \n&fProgresso: %progress%",
@@ -128,29 +129,29 @@ public class SkyWarsAchievement extends Achievement {
                 1000L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Assistente (Dupla)",
-                SkyWarsStatsInformation.class,
-                "2v2assists",
-                50L,
-                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &6100 Coins\n \n&fProgresso: %progress%",
-                AchievementReward.COINS,
-                100L,
-                null));
-
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Assistente Mestre (Dupla)",
-                SkyWarsStatsInformation.class,
-                "2v2assists",
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Pontuador (Dupla)",
+                TheBridgeStatsInformation.class,
+                "2v2points",
                 250L,
-                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &6500 Coins\n \n&fProgresso: %progress%",
+                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7pontos para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
                 AchievementReward.COINS,
-                500L,
+                250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Pontuador Mestre (Dupla)",
+                TheBridgeStatsInformation.class,
+                "2v2points",
+                1000L,
+                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7pontos para receber:\n \n &8• &61000 Coins\n \n&fProgresso: %progress%",
+                AchievementReward.COINS,
+                1000L,
+                null));
+
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
                 "Persistente (Dupla)",
-                SkyWarsStatsInformation.class,
+                TheBridgeStatsInformation.class,
                 "2v2games",
                 250L,
                 "%material% : 1 : nome>%name% : desc>&7Jogue um total de %reach%\n&7partidas para receber:\n \n &8• &6250 Coins\n \n&fProgresso: %progress%",
@@ -158,41 +159,41 @@ public class SkyWarsAchievement extends Achievement {
                 250L,
                 null));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Traidor Celestial",
-                SkyWarsStatsInformation.class,
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Assassino das Pontes",
+                TheBridgeStatsInformation.class,
                 "1v1kills",
                 500L,
-                "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &fTítulo: &cAnjo da Morte\n \n&fProgresso: %progress%",
+                "%material% : 1 : nome>%name% : desc>&7Abata um total de %reach%\n&7jogadores para receber:\n \n &8• &fTítulo: &cSentinela da Ponte\n \n&fProgresso: %progress%",
                 AchievementReward.TITLE,
                 0L,
-                TitleManager.findByID(3L),
+                TitleManager.findByID(0L),
                 "2v2kills"));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Destrono Celestial",
-                SkyWarsStatsInformation.class,
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Glorioso sobre Pontes",
+                TheBridgeStatsInformation.class,
                 "1v1wins",
                 400L,
-                "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &fTítulo: &bRei Celestial\n \n&fProgresso: %progress%",
+                "%material% : 1 : nome>%name% : desc>&7Vença um total de %reach%\n&7partidas para receber:\n \n &8• &fTítulo: &6Líder da Ponte\n \n&fProgresso: %progress%",
                 AchievementReward.TITLE,
                 0L,
-                TitleManager.findByID(4L),
+                TitleManager.findByID(1L),
                 "2v2wins"));
 
-        Achievement.registerNewAchievement(new SkyWarsAchievement((long) Achievement.listAchievements().size(),
-                "Anjo Guardião",
-                SkyWarsStatsInformation.class,
-                "1v1assists",
+        Achievement.registerNewAchievement(new TheBridgeAchievement((long) Achievement.listAchievements().size(),
+                "Maestria em Pontuação",
+                TheBridgeStatsInformation.class,
+                "1v1points",
                 500L,
-                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &fTítulo: &6Companheiro de Asas\n \n&fProgresso: %progress%",
+                "%material% : 1 : nome>%name% : desc>&7Consiga um total de %reach%\n&7assistências para receber:\n \n &8• &fTítulo: &ePontuador Mestre\n \n&fProgresso: %progress%",
                 AchievementReward.TITLE,
                 0L,
-                TitleManager.findByID(5L),
-                "2v2assists"));
+                TitleManager.findByID(2L),
+                "2v2points"));
     }
 
-    public SkyWarsAchievement(Long id, String name, Class<? extends DataCollection> classCollection, String key, Long reach, String iconBase, AchievementReward reward, Long amountReward, Title titleReward, String... additionalKeys) {
+    public TheBridgeAchievement(Long id, String name, Class<? extends DataCollection> classCollection, String key, Long reach, String iconBase, AchievementReward reward, Long amountReward, Title titleReward, String... additionalKeys) {
         super(id, name, classCollection, key, reach, iconBase, reward, amountReward, titleReward, additionalKeys);
     }
 
@@ -225,13 +226,12 @@ public class SkyWarsAchievement extends Achievement {
     public Long getCurrent(Profile profile) {
         long current;
         try {
-            current = profile.loadSkyWarsStatsContainer().getInformation(this.key);
+            current = profile.loadTheBridgeStatsContainer().getInformation(this.key);
             for (String additionalKey : additionalKeys) {
-                current += profile.loadSkyWarsStatsContainer().getInformation(additionalKey, Long.class);
+                current += profile.loadTheBridgeStatsContainer().getInformation(additionalKey, Long.class);
             }
         } catch (Exception e) {
             current = 0L;
-            e.printStackTrace();
         }
 
         if (current > this.reach) {

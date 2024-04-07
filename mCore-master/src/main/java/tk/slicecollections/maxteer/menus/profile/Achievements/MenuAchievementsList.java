@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
+import tk.slicecollections.maxteer.achievements.types.TheBridgeAchievement;
 import tk.slicecollections.maxteer.libraries.menu.PlayerMenu;
 import tk.slicecollections.maxteer.menus.MenuProfile;
 import tk.slicecollections.maxteer.player.Profile;
@@ -29,7 +30,7 @@ public class MenuAchievementsList extends PlayerMenu {
         String color = (completed == max) ? "&a" : (completed > max / 2) ? "&7" : "&c";
         this.setItem(11, BukkitUtils.deserializeItemStack("GRASS : 1 : nome>&aSky Wars : desc>&fDesafios: " + color + completed + "/" + max + "\n \n&eClique para visualizar!"));
 
-        achievements = Achievement.listAllByClass(SkyWarsAchievement.class);
+        achievements = Achievement.listAllByClass(TheBridgeAchievement.class);
         max = achievements.size();
         completed = achievements.stream().filter(achievement -> achievement.hasCompleted(profile)).count();
         color = (completed == max) ? "&a" : (completed > max / 2) ? "&7" : "&c";
@@ -78,7 +79,7 @@ public class MenuAchievementsList extends PlayerMenu {
 
                             case 13: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
-                                new MenuAchievements(profile, SkyWarsAchievement.class);
+                                new MenuAchievements(profile, TheBridgeAchievement.class);
                                 break;
                             }
 

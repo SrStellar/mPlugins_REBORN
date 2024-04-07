@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
+import tk.slicecollections.maxteer.achievements.types.TheBridgeAchievement;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
 import tk.slicecollections.maxteer.player.Profile;
@@ -22,6 +23,7 @@ public abstract class Achievement {
 
     public static void setupAchievements() {
         SkyWarsAchievement.setupAchievements();
+        TheBridgeAchievement.setupAchievements();
     }
 
     @SuppressWarnings("unchecked")

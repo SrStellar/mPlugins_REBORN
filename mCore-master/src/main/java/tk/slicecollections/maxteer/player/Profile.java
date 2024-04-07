@@ -11,12 +11,10 @@ import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
-import tk.slicecollections.maxteer.database.cache.collections.AchievementsInformation;
-import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
-import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
-import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
+import tk.slicecollections.maxteer.database.cache.collections.*;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
+import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
 import tk.slicecollections.maxteer.deliveries.DeliveryContainer;
 import tk.slicecollections.maxteer.game.Game;
 import tk.slicecollections.maxteer.game.GameTeam;
@@ -302,5 +300,9 @@ public class Profile {
 
     public SkyWarsStatsInformation loadSkyWarsStatsContainer() {
         return this.getCache().loadTableCache(SkyWarsCache.class).loadCollection(SkyWarsStatsInformation.class);
+    }
+
+    public TheBridgeStatsInformation loadTheBridgeStatsContainer() {
+        return this.getCache().loadTableCache(TheBridgeCache.class).loadCollection(TheBridgeStatsInformation.class);
     }
 }
