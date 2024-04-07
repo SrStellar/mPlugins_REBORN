@@ -6,8 +6,11 @@ import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.cash.CashManager;
 import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
+import tk.slicecollections.maxteer.database.cache.collections.MurderStatsInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
+import tk.slicecollections.maxteer.database.cache.collections.TheBridgeStatsInformation;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
+import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.player.role.Role;
@@ -77,16 +80,58 @@ public class MCoreExpansion extends PlaceholderExpansion {
       }
 
       default: {
-        if (params.startsWith("SkyWars_")) {
-          String table = "mCoreSkyWars";
-          String value = params.replace("SkyWars_", "");
-          SkyWarsStatsInformation information = profile.loadSkyWarsStatsContainer();
-          if (value.equals("kills") || value.equals("deaths") || value.equals("assists") || value.equals("games") || value.equals("wins")) {
-            return StringUtils.formatNumber(information.getInformation("1v1" + value, Long.class) + information.getInformation("2v2" + value, Long.class));
-          } else if (value.contains("kills") || value.contains("deaths") || value.contains("assists") || value.contains("games") || value.contains("wins")) {
-            return StringUtils.formatNumber(information.getInformation(value, Long.class));
-          } else if (value.equals("coins")) {
-            return StringUtils.formatNumber(profile.loadCoinsContainer(SkyWarsCache.class).getCoins());
+        switch (params.split("_")[0]) {
+          case "SkyWars": {
+            String value = params.replace("SkyWars_", "");
+            SkyWarsStatsInformation information = profile.loadSkyWarsStatsContainer();
+            if (value.equals("kills") || value.equals("deaths") || value.equals("assists") || value.equals("games") || value.equals("wins")) {
+              return StringUtils.formatNumber(information.getInformation("1v1" + value, Long.class) + information.getInformation("2v2" + value, Long.class));
+            } else if (value.contains("kills") || value.contains("deaths") || value.contains("assists") || value.contains("games") || value.contains("wins")) {
+              return StringUtils.formatNumber(information.getInformation(value, Long.class));
+            } else if (value.equals("coins")) {
+              return StringUtils.formatNumber(profile.loadCoinsContainer(SkyWarsCache.class).getCoins());
+            }
+          }
+
+          case "TheBridge": {
+            String value = params.replace("TheBridge_", "");
+            TheBridgeStatsInformation information = profile.loadTheBridgeStatsContainer();
+            if (value.equals("kills") || value.equals("deaths") || value.equals("games") || value.equals("points") || value.equals("wins")) {
+              return StringUtils.formatNumber(information.getInformation("1v1" + value, Long.class) + information.getInformation("2v2" + value, Long.class));
+            } else if (value.contains("kills") || value.contains("deaths") || value.contains("games") || value.contains("points") || value.contains("wins")) {
+              return StringUtils.formatNumber(information.getInformation(value, Long.class));
+            } else if (value.equals("coins")) {
+              return StringUtils.formatNumber(profile.loadCoinsContainer(TheBridgeCache.class).getCoins());
+            }
+          }
+
+          case "Murder": {
+            String value = params.replace("Murder_", "");
+            MurderStatsInformation information = profile.loadMurderStatsContainer();
+            String data = null;
+            if (value.split("_").length > 1) {
+              data = value.split("_")[1];
+            }
+
+            switch (value.split("_")[0]) {
+              case "classic": {
+                if (data.equals("kills") || data.equals("bowkills") || data.equals("knifekills") || data.equals("thrownknifekills") || data.equals("wins") || data.equals("detectivewins") || data.equals("killerwins")) {
+                  return StringUtils.formatNumber(information.getInformation("cl" + data, Long.class));
+                } else if (data.equals("quickestdetective") || data.equals("quickestkiller")) {
+                  return MURDER_FORMAT.format(information.getInformation("cl" + data, Long.class) * 1000);
+                }
+              }
+
+              case "assassins": {
+                if (data.equals("kills") || data.equals("thrownknifekills") || data.equals("wins")) {
+                  return StringUtils.formatNumber(information.getInformation("as" + data, Long.class));
+                }
+              }
+            }
+
+            if (value.equals("coins")) {
+              return StringUtils.formatNumber(profile.loadCoinsContainer(TheBridgeCache.class).getCoins());
+            }
           }
         }
       }

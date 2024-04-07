@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.achievements.Achievement;
+import tk.slicecollections.maxteer.achievements.types.MurderAchievement;
 import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
 import tk.slicecollections.maxteer.achievements.types.TheBridgeAchievement;
 import tk.slicecollections.maxteer.libraries.menu.PlayerMenu;
@@ -37,7 +38,7 @@ public class MenuAchievementsList extends PlayerMenu {
         this.setItem(13,
                 BukkitUtils.deserializeItemStack("STAINED_CLAY:11 : 1 : nome>&aThe Bridge : desc>&fDesafios: " + color + completed + "/" + max + "\n \n&eClique para visualizar!"));
 
-        achievements = Achievement.listAllByClass(SkyWarsAchievement.class);
+        achievements = Achievement.listAllByClass(MurderAchievement.class);
         max = achievements.size();
         completed = achievements.stream().filter(achievement -> achievement.hasCompleted(profile)).count();
         color = (completed == max) ? "&a" : (completed > max / 2) ? "&7" : "&c";
@@ -84,7 +85,7 @@ public class MenuAchievementsList extends PlayerMenu {
                             }
 
                             case 15: {
-                                new MenuAchievements(profile, SkyWarsAchievement.class);
+                                new MenuAchievements(profile, MurderAchievement.class);
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
                                 break;
                             }

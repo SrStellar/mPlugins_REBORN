@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.parser.ParseException;
+import tk.slicecollections.maxteer.achievements.types.MurderAchievement;
 import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
 import tk.slicecollections.maxteer.achievements.types.TheBridgeAchievement;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
@@ -24,6 +25,7 @@ public abstract class Achievement {
     public static void setupAchievements() {
         SkyWarsAchievement.setupAchievements();
         TheBridgeAchievement.setupAchievements();
+        MurderAchievement.setupAchievements();
     }
 
     @SuppressWarnings("unchecked")

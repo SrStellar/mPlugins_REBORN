@@ -6,7 +6,7 @@ import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
-import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
+import tk.slicecollections.maxteer.database.cache.collections.MurderStatsInformation;
 import tk.slicecollections.maxteer.database.cache.collections.TheBridgeStatsInformation;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TheBridgeCache extends Data {
+public class MurderCache extends Data {
 
-    public TheBridgeCache(String playerKey) {
-        super("mCoreTheBridge", playerKey);
+    public MurderCache(String playerKey) {
+        super("mCoreMurder", playerKey);
         setupTables();
-        setupCollections(TheBridgeStatsInformation.class);
+        setupCollections(MurderStatsInformation.class);
     }
 
     @Override
@@ -36,8 +36,7 @@ public class TheBridgeCache extends Data {
                     "`coins` DOUBLE, ",
                     "`lastmap` LONG, ",
                     "`cosmetics` VARCHAR(255), ",
-                    "`selected` VARCHAR(255), ",
-                    "`hotbar` VARCHAR(255)");
+                    "`selected` VARCHAR(255)");
         }
 
         return this;
@@ -58,7 +57,7 @@ public class TheBridgeCache extends Data {
             }
         });
 
-        registerNewCollection(new CoinsGenericInformation(this.playerKey, "coins", "mCoreTheBridge")); //Coluna generica de coins
+        registerNewCollection(new CoinsGenericInformation(this.playerKey, "coins", "mCoreMurder")); //Coluna generica de coins
         
         if (this.playerKey.isEmpty()) {
             return;

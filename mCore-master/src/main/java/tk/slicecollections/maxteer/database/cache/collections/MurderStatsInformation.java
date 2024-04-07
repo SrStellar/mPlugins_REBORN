@@ -8,9 +8,10 @@ import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 
 @SuppressWarnings("unchecked")
-public class TheBridgeStatsInformation extends DataCollection {
-    public TheBridgeStatsInformation(String playerKey) {
-        super("stats", "mCoreTheBridge", null, playerKey);
+public class MurderStatsInformation extends DataCollection {
+
+    public MurderStatsInformation(String playerKey) {
+        super("stats", "mCoreMurder", null, playerKey);
     }
 
     @Override
@@ -18,8 +19,8 @@ public class TheBridgeStatsInformation extends DataCollection {
         DataTypes type = Database.getInstance().getType();
         if (type.equals(DataTypes.MYSQL)) {
             MySQL mySQL = ((MySQL) Database.getInstance());
-            if (!mySQL.existsColumn("mCoreTheBridge", "stats")) {
-                mySQL.addColumn("mCoreTheBridge", "stats");
+            if (!mySQL.existsColumn("mCoreMurder", "stats")) {
+                mySQL.addColumn("mCoreMurder", "stats");
             }
         }
     }
@@ -27,18 +28,20 @@ public class TheBridgeStatsInformation extends DataCollection {
     @Override
     public Object getDefaultValue() {
         JSONObject defaultObject = new JSONObject();
-        defaultObject.put("1v1kills", 0L);
-        defaultObject.put("1v1deaths", 0L);
-        defaultObject.put("1v1games", 0L);
-        defaultObject.put("1v1points", 0L);
-        defaultObject.put("1v1wins", 0L);
-        defaultObject.put("2v2kills", 0L);
-        defaultObject.put("2v2deaths", 0L);
-        defaultObject.put("2v2games", 0L);
-        defaultObject.put("2v2points", 0L);
-        defaultObject.put("2v2wins", 0L);
-        defaultObject.put("winstreak", 0L);
-        defaultObject.put("laststreak", System.currentTimeMillis());
+        defaultObject.put("clkills", 0L);
+        defaultObject.put("clbowkills", 0L);
+        defaultObject.put("clknifekills", 0L);
+        defaultObject.put("clthrownknifekills", 0L);
+        defaultObject.put("clwins", 0L);
+        defaultObject.put("cldetectivewins", 0L);
+        defaultObject.put("clkillerwins", 0L);
+        defaultObject.put("clquickestdetective", 0L);
+        defaultObject.put("clquickestkiller", 0L);
+        defaultObject.put("clchancedetective", 0L);
+        defaultObject.put("clchancekiller", 0L);
+        defaultObject.put("askills", 0L);
+        defaultObject.put("asthrownknifekills", 0L);
+        defaultObject.put("aswins", 0L);
         return defaultObject.toJSONString();
     }
 

@@ -2,7 +2,11 @@ package tk.slicecollections.maxteer.achievements;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
+import tk.slicecollections.maxteer.achievements.types.TheBridgeAchievement;
+import tk.slicecollections.maxteer.database.cache.types.MurderCache;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
+import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.titles.Title;
 
@@ -16,10 +20,17 @@ public enum AchievementReward {
 
     private final String name;
 
-    public void setupReward(Profile profile, Double amount, Title title) {
+    public void setupReward(Profile profile, Double amount, Title title, Achievement achievement) {
         switch (this.name) {
             case "coins": {
-                profile.loadCoinsContainer(SkyWarsCache.class).addCoins(amount);
+                if (achievement instanceof SkyWarsAchievement) {
+                    profile.loadCoinsContainer(SkyWarsCache.class).addCoins(amount);
+                } else if (achievement instanceof TheBridgeAchievement) {
+                    profile.loadCoinsContainer(TheBridgeCache.class).addCoins(amount);
+                } else {
+                    profile.loadCoinsContainer(MurderCache.class).addCoins(amount);
+                }
+
                 break;
             }
 
@@ -34,7 +45,6 @@ public enum AchievementReward {
 
             case "title": {
                 title.addTitleToPlayer(profile);
-                System.out.println("a");
                 break;
             }
         }

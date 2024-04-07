@@ -204,7 +204,7 @@ public class SkyWarsAchievement extends Achievement {
         }
 
         if (Objects.equals(getCurrent(profile), this.reach)) {
-            this.reward.setupReward(profile, Double.valueOf(this.amountReward), titleReward);
+            this.reward.setupReward(profile, Double.valueOf(this.amountReward), titleReward, this);
             profile.getPlayer().playSound(profile.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
             profile.loadAchievementsContainer().addNewAchievement(this);
         }

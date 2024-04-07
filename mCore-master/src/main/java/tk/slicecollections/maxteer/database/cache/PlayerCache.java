@@ -1,6 +1,7 @@
 package tk.slicecollections.maxteer.database.cache;
 
 import lombok.RequiredArgsConstructor;
+import tk.slicecollections.maxteer.database.cache.types.MurderCache;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
 import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
@@ -20,6 +21,7 @@ public class PlayerCache {
         DATA_CACHE.add(new ProfileCache(playerKey));
         DATA_CACHE.add(new SkyWarsCache(playerKey));
         DATA_CACHE.add(new TheBridgeCache(playerKey));
+        DATA_CACHE.add(new MurderCache(playerKey));
     }
 
     public List<Data> listDataCache() {

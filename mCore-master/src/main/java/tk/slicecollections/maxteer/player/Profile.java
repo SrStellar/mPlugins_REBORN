@@ -12,6 +12,7 @@ import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
 import tk.slicecollections.maxteer.database.cache.collections.*;
+import tk.slicecollections.maxteer.database.cache.types.MurderCache;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.database.cache.types.SkyWarsCache;
 import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
@@ -187,7 +188,7 @@ public class Profile {
             player.setGameMode(GameMode.ADVENTURE);
             player.teleport(Core.getLobby());
 
-            player.setAllowFlight(player.hasPermission("score.fly"));
+            player.setAllowFlight(Role.findRoleByPermission(player).getCanFly());
             try {
                 cache.loadTableCache(ProfileCache.class).loadCollection(ProfileInformation.class).updateValue("role", StringUtils.stripColors(Role.findRoleByPermission(player).getName()));
             } catch (ParseException e) {
@@ -304,5 +305,9 @@ public class Profile {
 
     public TheBridgeStatsInformation loadTheBridgeStatsContainer() {
         return this.getCache().loadTableCache(TheBridgeCache.class).loadCollection(TheBridgeStatsInformation.class);
+    }
+
+    public MurderStatsInformation loadMurderStatsContainer() {
+        return this.getCache().loadTableCache(MurderCache.class).loadCollection(MurderStatsInformation.class);
     }
 }

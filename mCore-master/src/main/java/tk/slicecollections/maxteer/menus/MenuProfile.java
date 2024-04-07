@@ -30,7 +30,6 @@ public class MenuProfile extends PlayerMenu {
     @SneakyThrows
     public MenuProfile(Profile profile) {
         super(profile.getPlayer(), "Meu Perfil", 3);
-
         this.setItem(10, BukkitUtils.putProfileOnSkull(this.player, BukkitUtils.deserializeItemStack(
                 "SKULL_ITEM:3 : 1 : nome>&aInformações Pessoais : desc>&fRank: " + Role.findRoleByPermission(player)
                         .getName() + "\n \n&fCadastrado: &7" +
