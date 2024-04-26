@@ -40,7 +40,7 @@ public class Role {
   }
 
   public static Role findByPermission(String permission) {
-    return ROLES.stream().filter(role -> role.getPermission().equals(permission)).findFirst().orElse(null);
+    return ROLES.stream().filter(role -> role.getPermission().equals(permission)).findFirst().orElse(getDefaultRole());
   }
 
   public static List<Role> loadAllRoles(Player player) {

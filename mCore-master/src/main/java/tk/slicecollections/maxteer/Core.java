@@ -205,7 +205,7 @@ public class Core extends MPlugin {
   }
 
   //Ele seta automaticamente qual é o minigame baseado no nome do plugin
-  public static void indentifyPluginType(JavaPlugin mainInstance) {
+  public static void identifyPluginType(JavaPlugin mainInstance) {
     minigames.stream().filter(s -> mainInstance.getDescription().getName().toLowerCase().contains(s.replace(" ", "").toLowerCase())).findFirst().ifPresent(s -> minigame = s);
   }
 }

@@ -26,7 +26,6 @@ public class DeliveryReward {
         try {
             this.values = type.parseValues(reward.replace(splitter[0] + ">", ""));
         } catch (Exception ex) {
-            ex.printStackTrace();
             this.type = RewardType.COMANDO;
             this.values = new Object[]{"tell {name} §cPrêmio \"" + reward + "\" inválido!"};
         }

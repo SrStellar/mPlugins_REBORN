@@ -1,9 +1,7 @@
 package tk.slicecollections.maxteer.database.cache.types;
 
-import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
@@ -14,11 +12,12 @@ import tk.slicecollections.maxteer.database.cache.collections.TitleInformation;
 import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
-import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProfileCache extends Data {
@@ -69,7 +68,7 @@ public class ProfileCache extends Data {
     @Override
     @SuppressWarnings("unchecked")
     public void loadValueCollections(boolean asyncTask) {
-        Runnable task = () -> {
+        Thread task = new Thread(() -> {
             DataTypes type = Database.getInstance().getType();
             Map<String, Object> collectionsValue;
             if (type.equals(DataTypes.MYSQL)) {
@@ -102,11 +101,11 @@ public class ProfileCache extends Data {
 
                 collectionCache.updateValue(collectionCache.getDefaultValue());
             });
-        };
+        });
 
 
         if (asyncTask) {
-            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+            task.start();
         } else {
             task.run();
         }
@@ -114,10 +113,10 @@ public class ProfileCache extends Data {
 
     @Override
     public void saveValueCollections(boolean asyncTask) {
-        Runnable task = ()-> listCollections().forEach(DataCollectionsInterface::saveValue);
+        Thread task = new Thread(()-> listCollections().forEach(DataCollectionsInterface::saveValue));
 
         if (asyncTask) {
-            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+            task.start();
         } else {
             task.run();
         }

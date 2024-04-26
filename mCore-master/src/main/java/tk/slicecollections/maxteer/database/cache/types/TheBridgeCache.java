@@ -69,7 +69,7 @@ public class TheBridgeCache extends Data {
 
     @Override
     public void loadValueCollections(boolean asyncTask) {
-        Runnable task = () -> {
+        Thread task = new Thread(() -> {
             DataTypes type = Database.getInstance().getType();
             Map<String, Object> collectionsValue;
             if (type.equals(DataTypes.MYSQL)) {
@@ -91,11 +91,11 @@ public class TheBridgeCache extends Data {
 
                 collectionCache.updateValue(collectionCache.getDefaultValue());
             });
-        };
+        });
 
 
         if (asyncTask) {
-            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+            task.start();
         } else {
             task.run();
         }
@@ -103,10 +103,10 @@ public class TheBridgeCache extends Data {
 
     @Override
     public void saveValueCollections(boolean asyncTask) {
-        Runnable task = ()-> listCollections().forEach(DataCollectionsInterface::saveValue);
+        Thread task = new Thread(()-> listCollections().forEach(DataCollectionsInterface::saveValue));
 
         if (asyncTask) {
-            Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), task);
+            task.start();
         } else {
             task.run();
         }

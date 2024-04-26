@@ -75,10 +75,8 @@ public class VirtualTeam {
     this.prefix = text.substring(0, Math.min(text.length(), 16));
     if (this.prefix.endsWith("§") && this.prefix.length() == 16) {
       this.prefix = this.prefix.substring(0, this.prefix.length() - 1);
-      text = text.substring(this.prefix.length());
-    } else {
-      text = text.substring(prefix.length());
     }
+    text = text.substring(this.prefix.length());
 
     this.suffix = StringUtils.getLastColor(this.prefix) + text;
     this.suffix = this.suffix.substring(0, Math.min(16, this.suffix.length()));
@@ -86,4 +84,5 @@ public class VirtualTeam {
       this.suffix = this.suffix.substring(0, this.suffix.length() - 1);
     }
   }
+
 }

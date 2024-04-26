@@ -102,13 +102,12 @@ public abstract class MScoreboard {
     return this;
   }
 
-  public MScoreboard display(String display) {
+  public void display(String display) {
     this.display = StringUtils.translateAlternateColorCodes('&', display);
     if (this.objective != null) {
       this.objective.setDisplayName(this.display.substring(0, Math.min(this.display.length(), 32)));
     }
 
-    return this;
   }
 
   public MScoreboard scroller(ScoreboardScroller ss) {
