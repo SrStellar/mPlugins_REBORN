@@ -34,6 +34,7 @@ import tk.slicecollections.maxteer.plugin.MPlugin;
 import tk.slicecollections.maxteer.plugin.config.MConfig;
 import tk.slicecollections.maxteer.queue.Queue;
 import tk.slicecollections.maxteer.queue.QueuePlayer;
+import tk.slicecollections.maxteer.servers.ServerItem;
 import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
@@ -140,6 +141,7 @@ public class Core extends MPlugin {
     Listeners.setupListeners();
     Achievement.setupAchievements();
     NetworkManager.setupNetworkManager();
+    ServerItem.setupServers();
 
     ProtocolLibrary.getProtocolManager().addPacketListener(new FakeAdapter());
     ProtocolLibrary.getProtocolManager().addPacketListener(new NPCAdapter());
