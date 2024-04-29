@@ -11,7 +11,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 public class MurderStatsInformation extends DataCollection {
 
     public MurderStatsInformation(String playerKey) {
-        super("stats", "mCoreMurder", null, playerKey);
+        super("stats", "mCoreMurder", false, "", null, playerKey);
     }
 
     @Override

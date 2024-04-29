@@ -17,12 +17,14 @@ import net.md_5.bungee.protocol.Property;
 import tk.slicecollections.maxteer.bungee.Bungee;
 import tk.slicecollections.maxteer.bungee.party.BungeeParty;
 import tk.slicecollections.maxteer.bungee.party.BungeePartyManager;
+import tk.slicecollections.maxteer.bungee.proxiedplayer.ProxiedProfile;
+import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.channels.Channel;
+import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.collections.ProfileInfoContainer;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.*;
-import java.util.logging.Level;
 
 /**
  * @author Maxter
@@ -33,11 +35,16 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void onPlayerDisconnect(PlayerDisconnectEvent evt) {
+        ProxiedProfile profile = ProxiedProfile.loadProfile(evt.getPlayer().getName());
+        if (profile != null) {
+            profile.destroy();
+        }
     }
 
     @EventHandler
-    public void onPostLogin(PreLoginEvent evt) {
+    public void onPreLogin(PreLoginEvent evt) {
         String playerName = evt.getConnection().getName();
+        ProxiedProfile.createProfile(playerName);
     }
 
     @EventHandler
@@ -62,6 +69,23 @@ public class Listeners implements Listener {
                             }
                         }
                     }
+                }
+
+                if (subChannel.equalsIgnoreCase("UPDATE_VALUE")) {
+                    String targetName = in.readUTF();
+                    ProxiedProfile profile = ProxiedProfile.loadProfile(targetName);
+                    if (profile == null) {
+                        return;
+                    }
+
+                    String channelName = in.readUTF();
+                    Channel channel = profile.getCache().findChannelByName(channelName);
+                    if (channel == null) {
+                        return;
+                    }
+
+                    String value = in.readUTF();
+                    channel.action(value);
                 }
             }
         }
@@ -128,12 +152,12 @@ public class Listeners implements Listener {
     }
 
     private boolean canReceiveTell(String name) {
-        Profile profile = Profile.loadProfile(name);
+        ProxiedProfile profile = ProxiedProfile.loadProfile(name);
         if (profile == null) {
             return true;
         }
 
-        return true;
+        return profile.getCache().findContainer(ProfileInfoContainer.class).getPreference(PreferenceEnum.PRIVATE_MESSAGES);
     }
 
 }

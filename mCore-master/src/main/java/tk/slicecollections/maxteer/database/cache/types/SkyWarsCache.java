@@ -14,15 +14,18 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SkyWarsCache extends Data {
 
-    public SkyWarsCache(String playerKey) {
+    public SkyWarsCache(String playerKey, boolean setupTables, boolean load) {
         super("mCoreSkyWars", playerKey);
-        setupTables();
+        this.loadValue = load;
+
+        if (setupTables) setupTables();
         setupCollections(SkyWarsStatsInformation.class);
     }
 
@@ -49,7 +52,7 @@ public class SkyWarsCache extends Data {
             try {
                 Constructor<? extends DataCollection> constructor = clazz.getConstructor(String.class);
                 DataCollection collectionCache = constructor.newInstance(this.playerKey);
-                collectionCache.setupColumn();
+                if (!loadValue) collectionCache.setupColumn();
                 registerNewCollection(collectionCache);
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                      InvocationTargetException e) {
@@ -63,7 +66,7 @@ public class SkyWarsCache extends Data {
             return;
         }
 
-        loadValueCollections(false);
+        if (loadValue) loadValueCollections(false);
     }
 
     @Override
@@ -102,13 +105,7 @@ public class SkyWarsCache extends Data {
 
     @Override
     public void saveValueCollections(boolean asyncTask) {
-        Thread task = new Thread(()-> listCollections().forEach(DataCollectionsInterface::saveValue));
-
-        if (asyncTask) {
-            task.start();
-        } else {
-            task.run();
-        }
+        defaultSave(asyncTask);
     }
 
 }

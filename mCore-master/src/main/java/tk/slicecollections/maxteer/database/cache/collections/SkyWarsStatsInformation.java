@@ -10,7 +10,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 @SuppressWarnings("unchecked")
 public class SkyWarsStatsInformation extends DataCollection {
     public SkyWarsStatsInformation(String playerKey) {
-        super("stats", "mCoreSkyWars", null, playerKey);
+        super("stats", "mCoreSkyWars", false, "", null, playerKey);
     }
 
     @Override

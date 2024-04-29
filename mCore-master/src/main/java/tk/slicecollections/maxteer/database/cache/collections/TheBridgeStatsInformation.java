@@ -10,7 +10,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 @SuppressWarnings("unchecked")
 public class TheBridgeStatsInformation extends DataCollection {
     public TheBridgeStatsInformation(String playerKey) {
-        super("stats", "mCoreTheBridge", null, playerKey);
+        super("stats", "mCoreTheBridge", false, "", null, playerKey);
     }
 
     @Override

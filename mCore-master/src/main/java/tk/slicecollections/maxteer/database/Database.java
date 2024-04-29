@@ -16,6 +16,7 @@ public class Database {
             if (types.equals(DataTypes.MYSQL)) {
                 instance = new MySQL(configs[0], configs[1], configs[2], configs[3], true);
             }
+
             instance.setupConnection();
         } catch (Exception e) {
             Manager.sendMessageToConsole("§4Ocorreu um erro enquanto nós conectavamos ao database...");

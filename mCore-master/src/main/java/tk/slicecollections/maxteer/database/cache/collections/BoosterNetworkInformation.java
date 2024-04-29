@@ -11,7 +11,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 public class BoosterNetworkInformation extends DataCollection {
 
     public BoosterNetworkInformation(String minigame) {
-        super("booster", "mCoreBooster", null, minigame);
+        super("booster", "mCoreBooster", false, "", null, minigame);
     }
 
     @Override

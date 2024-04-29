@@ -8,7 +8,7 @@ import tk.slicecollections.maxteer.database.types.MySQL;
 public class CoinsGenericInformation extends DataCollection {
 
     public CoinsGenericInformation(String playerKey, String column, String table) {
-        super(column, table, null, playerKey);
+        super(column, table, false, "", null, playerKey);
     }
 
     @Override

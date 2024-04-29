@@ -11,7 +11,7 @@ import tk.slicecollections.maxteer.titles.Title;
 public class SelectedInformation extends DataCollection {
 
     public SelectedInformation(String playerKey) {
-        super("selected", "mCoreProfile", null, playerKey);
+        super("selected", "mCoreProfile", false, "", null, playerKey);
     }
 
     @Override

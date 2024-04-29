@@ -11,7 +11,7 @@ import tk.slicecollections.maxteer.titles.Title;
 
 public class AchievementsInformation extends DataCollection {
     public AchievementsInformation(String playerKey) {
-        super("achievements", "mCoreProfile", null, playerKey);
+        super("achievements", "mCoreProfile", false, "", null, playerKey);
     }
 
     @Override

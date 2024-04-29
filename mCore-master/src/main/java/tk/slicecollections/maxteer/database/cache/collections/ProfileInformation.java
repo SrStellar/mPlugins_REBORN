@@ -13,7 +13,7 @@ import tk.slicecollections.maxteer.utils.StringUtils;
 public class ProfileInformation extends DataCollection {
 
     public ProfileInformation(String playerKey) {
-        super("informations", "mCoreProfile", null, playerKey);
+        super("informations", "mCoreProfile", true,"updateProfileInfo", null, playerKey);
     }
 
     @Override

@@ -18,10 +18,10 @@ public class PlayerCache {
     private final List<Data> DATA_CACHE = new ArrayList<>();
 
     public void setupDataCache() {
-        DATA_CACHE.add(new ProfileCache(playerKey));
-        DATA_CACHE.add(new SkyWarsCache(playerKey));
-        DATA_CACHE.add(new TheBridgeCache(playerKey));
-        DATA_CACHE.add(new MurderCache(playerKey));
+        DATA_CACHE.add(new ProfileCache(playerKey, false, true));
+        DATA_CACHE.add(new SkyWarsCache(playerKey, false, true));
+        DATA_CACHE.add(new TheBridgeCache(playerKey, false, true));
+        DATA_CACHE.add(new MurderCache(playerKey, false, true));
     }
 
     public List<Data> listDataCache() {

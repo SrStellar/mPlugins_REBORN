@@ -54,7 +54,9 @@ public class MySQL implements DatabaseInterface {
         config.setMaxLifetime(600000);
         config.addDataSourceProperty("autoReconnect", "true");
         this.resource = new HikariDataSource(config);
-        Data.setupDataCache();
+        if (!Manager.BUNGEE) {
+            Data.setupDataCache();
+        }
 
         Manager.sendMessageToConsole("Conexão MySQL realizada com sucesso!");
     }
@@ -107,6 +109,35 @@ public class MySQL implements DatabaseInterface {
             Connection newConnection = openConnection();
             Manager.sendMessageToConsole("§e[SQL-DEBUG] UPDATE " + tableName + " SET " + column + " = '" + value + "' WHERE " + conditions + ";");
             statement = newConnection.prepareStatement("UPDATE " + tableName + " SET " + column + " = '" + value + "' WHERE " + conditions + ";");
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void updateColumns(String tableName, Map<String, Object> columnsValues, String conditions) {
+        PreparedStatement statement = null;
+        try {
+            Connection newConnection = openConnection();
+            StringBuilder sb = new StringBuilder();
+            columnsValues.keySet().forEach(column -> {
+                if (sb.length() > 1) {
+                    sb.append(", ");
+                }
+
+                sb.append(column).append(" = '").append(columnsValues.get(column)).append("'");
+            });
+
+            Manager.sendMessageToConsole("§e[SQL-DEBUG] UPDATE " + tableName + " SET " + sb + " WHERE " + conditions + ";");
+            statement = newConnection.prepareStatement("UPDATE " + tableName + " SET " + sb + " WHERE " + conditions + ";");
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

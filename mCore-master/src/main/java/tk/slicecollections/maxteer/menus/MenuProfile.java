@@ -88,6 +88,7 @@ public class MenuProfile extends PlayerMenu {
                                 new MenuStatistics(profile);
                                 break;
                             }
+
                             case 13: {
                                 EnumSound.CLICK.play(this.player, 0.5F, 2.0F);
                                 new MenuPreferences(profile);

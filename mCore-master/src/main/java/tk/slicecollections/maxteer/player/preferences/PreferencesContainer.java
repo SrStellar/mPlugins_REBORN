@@ -28,7 +28,7 @@ public class PreferencesContainer extends ContainerAbstract {
         JSONObject preferencesCurrent = loadPreferencesJSON();
         List<Integer> noHasID = Arrays.stream(PreferenceEnum.values()).map(PreferenceEnum::getId).filter(id -> !preferencesCurrent.containsKey(String.valueOf(id))).collect(Collectors.toList());
         noHasID.forEach(integer -> preferencesCurrent.put(integer, true));
-        loadProfileInformation().updateValue("preferences", preferencesCurrent);
+        if (!noHasID.isEmpty()) loadProfileInformation().updateValue("preferences", preferencesCurrent);
     }
 
     public boolean getPreference(PreferenceEnum preference) {

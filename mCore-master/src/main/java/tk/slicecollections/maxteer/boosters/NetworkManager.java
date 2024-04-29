@@ -18,7 +18,7 @@ public class NetworkManager {
 
     public static void setupNetworkManager() {
         for (String minigame : Core.minigames) {
-            BOOSTER_DATA.put(minigame, new BoosterCache(minigame));
+            BOOSTER_DATA.put(minigame, new BoosterCache(minigame, false, true));
         }
 
         Core.getInstance().getLogger().info("Todos os boosters foram carregados com sucesso!");

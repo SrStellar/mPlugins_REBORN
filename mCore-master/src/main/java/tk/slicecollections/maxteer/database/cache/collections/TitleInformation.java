@@ -10,7 +10,7 @@ import tk.slicecollections.maxteer.titles.Title;
 
 public class TitleInformation extends DataCollection {
     public TitleInformation(String playerKey) {
-        super("titles", "mCoreProfile", null, playerKey);
+        super("titles", "mCoreProfile", false, "", null, playerKey);
     }
 
     @Override
