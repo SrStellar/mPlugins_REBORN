@@ -194,8 +194,8 @@ public enum EnumSound {
   VILLAGER_NO("VILLAGER_NO", "ENTITY_VILLAGER_NO"),
   VILLAGER_YES("VILLAGER_YES", "ENTITY_VILLAGER_YES");
 
-  private String oldSound;
-  private String newSound;
+  private final String oldSound;
+  private final String newSound;
 
   EnumSound(String oldSound, String newSound) {
     this.oldSound = oldSound;

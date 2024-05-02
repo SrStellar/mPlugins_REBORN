@@ -1,9 +1,10 @@
 package tk.slicecollections.maxteer.libraries.npclib.npc;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.entity.EntityType;
 import tk.slicecollections.maxteer.libraries.npclib.api.EntityController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Maxter

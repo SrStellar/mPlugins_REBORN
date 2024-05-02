@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.achievements.AchievementReward;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
-import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
 import tk.slicecollections.maxteer.database.cache.collections.TheBridgeStatsInformation;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.titles.Title;

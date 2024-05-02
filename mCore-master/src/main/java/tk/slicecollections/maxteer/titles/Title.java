@@ -3,7 +3,6 @@ package tk.slicecollections.maxteer.titles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;

@@ -1,8 +1,9 @@
 package tk.slicecollections.maxteer.game;
 
-import java.util.List;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.player.Profile;
+
+import java.util.List;
 
 /**
  * @author Maxter

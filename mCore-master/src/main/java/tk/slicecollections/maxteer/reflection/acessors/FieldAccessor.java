@@ -1,7 +1,8 @@
 package tk.slicecollections.maxteer.reflection.acessors;
 
-import java.lang.reflect.Field;
 import tk.slicecollections.maxteer.reflection.Accessors;
+
+import java.lang.reflect.Field;
 
 /**
  * Essa classe representa um {@link Field} com métodos seguros de acesso.

@@ -7,7 +7,6 @@ import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
-import tk.slicecollections.maxteer.titles.Title;
 
 public class AchievementsInformation extends DataCollection {
     public AchievementsInformation(String playerKey) {

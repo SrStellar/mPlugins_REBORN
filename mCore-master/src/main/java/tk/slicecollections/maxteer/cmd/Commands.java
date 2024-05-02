@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import tk.slicecollections.maxteer.Core;
-import tk.slicecollections.maxteer.player.fake.FakeManager;
 
 import java.util.Arrays;
 import java.util.logging.Level;

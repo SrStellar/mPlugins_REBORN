@@ -1,20 +1,16 @@
 package tk.slicecollections.maxteer.database.cache.types;
 
-import org.bukkit.Bukkit;
-import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.Database;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.DataCollection;
 import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
-import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,8 +20,8 @@ public class SkyWarsCache extends Data {
     public SkyWarsCache(String playerKey, boolean setupTables, boolean load) {
         super("mCoreSkyWars", playerKey);
         this.loadValue = load;
-
         if (setupTables) setupTables();
+
         setupCollections(SkyWarsStatsInformation.class);
     }
 

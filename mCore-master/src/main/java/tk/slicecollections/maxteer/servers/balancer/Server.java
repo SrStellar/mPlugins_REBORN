@@ -6,7 +6,6 @@ import tk.slicecollections.maxteer.servers.ServerPing;
 import tk.slicecollections.maxteer.servers.balancer.elements.LoadBalancerObject;
 import tk.slicecollections.maxteer.servers.balancer.elements.NumberConnection;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 
 /**

@@ -1,13 +1,10 @@
 package tk.slicecollections.maxteer.boosters;
 
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.database.cache.collections.BoosterNetworkInformation;
 import tk.slicecollections.maxteer.database.cache.types.BoosterCache;
 import tk.slicecollections.maxteer.player.Profile;
-import tk.slicecollections.maxteer.player.role.Role;
-import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,7 @@ public class NetworkManager {
 
     public static void setupNetworkManager() {
         for (String minigame : Core.minigames) {
-            BOOSTER_DATA.put(minigame, new BoosterCache(minigame, false, true));
+            BOOSTER_DATA.put(minigame, new BoosterCache(minigame, true, true));
         }
 
         Core.getInstance().getLogger().info("Todos os boosters foram carregados com sucesso!");

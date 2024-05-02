@@ -17,10 +17,11 @@
 
 package com.comphenix.packetwrapper;
 
-import java.util.List;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.google.common.primitives.Ints;
+
+import java.util.List;
 
 public class WrapperPlayServerEntityDestroy extends AbstractPacket {
   public static final PacketType TYPE = PacketType.Play.Server.ENTITY_DESTROY;

@@ -1,8 +1,8 @@
 package tk.slicecollections.maxteer.nms.interfaces.entity;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.libraries.holograms.api.HologramLine;
 
 /**

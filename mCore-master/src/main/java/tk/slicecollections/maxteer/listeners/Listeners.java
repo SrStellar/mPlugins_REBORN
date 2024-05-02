@@ -18,29 +18,25 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.json.simple.parser.ParseException;
 import org.spigotmc.WatchdogThread;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.Manager;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
-import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.player.Profile;
+import tk.slicecollections.maxteer.player.fake.FakeManager;
 import tk.slicecollections.maxteer.player.hotbar.HotbarButton;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
-import tk.slicecollections.maxteer.player.fake.FakeManager;
 import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.plugin.logger.MLogger;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.FieldAccessor;
-import tk.slicecollections.maxteer.titles.TitleController;
 import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Level;
 
 /**

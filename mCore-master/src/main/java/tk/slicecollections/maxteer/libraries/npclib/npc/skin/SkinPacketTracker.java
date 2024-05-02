@@ -1,8 +1,6 @@
 package tk.slicecollections.maxteer.libraries.npclib.npc.skin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,10 +10,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import com.google.common.base.Preconditions;
 import tk.slicecollections.maxteer.libraries.npclib.NPCLibrary;
 import tk.slicecollections.maxteer.libraries.npclib.api.npc.NPC;
 import tk.slicecollections.maxteer.nms.NMS;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class SkinPacketTracker {
 

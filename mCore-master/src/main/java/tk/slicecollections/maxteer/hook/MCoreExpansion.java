@@ -5,7 +5,6 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.cash.CashManager;
-import tk.slicecollections.maxteer.database.cache.collections.CoinsGenericInformation;
 import tk.slicecollections.maxteer.database.cache.collections.MurderStatsInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SkyWarsStatsInformation;
 import tk.slicecollections.maxteer.database.cache.collections.TheBridgeStatsInformation;

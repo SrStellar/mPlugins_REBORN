@@ -3,12 +3,13 @@ package tk.slicecollections.maxteer.titles;
 import org.bukkit.Bukkit;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
-import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.types.ProfileCache;
 import tk.slicecollections.maxteer.player.Profile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TitleManager {
 

@@ -9,14 +9,12 @@ import tk.slicecollections.maxteer.database.cache.collections.AchievementsInform
 import tk.slicecollections.maxteer.database.cache.collections.ProfileInformation;
 import tk.slicecollections.maxteer.database.cache.collections.SelectedInformation;
 import tk.slicecollections.maxteer.database.cache.collections.TitleInformation;
-import tk.slicecollections.maxteer.database.cache.interfaces.DataCollectionsInterface;
 import tk.slicecollections.maxteer.database.enuns.DataTypes;
 import tk.slicecollections.maxteer.database.types.MySQL;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,8 +24,8 @@ public class ProfileCache extends Data {
     public ProfileCache(String playerKey, boolean setupTables, boolean load) {
         super("mCoreProfile", playerKey);
         this.loadValue = load;
-
         if (setupTables) setupTables();
+
         setupCollections(ProfileInformation.class, SelectedInformation.class, TitleInformation.class, AchievementsInformation.class);
     }
 

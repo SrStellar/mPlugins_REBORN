@@ -1,6 +1,5 @@
 package tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tk.slicecollections.maxteer.bungee.Bungee;
 
 @Getter
 @RequiredArgsConstructor

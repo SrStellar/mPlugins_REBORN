@@ -190,7 +190,11 @@ public class MySQL implements DatabaseInterface {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < columns.length; i++) {
             String column = columns[i];
-            builder.append(column).append((i == columns.length - 1) ? "" : ", ");
+            if (builder.length() > 1) {
+                builder.append(", ");
+            }
+
+            builder.append(column);
         }
         try {
             Connection newConnection = openConnection();
@@ -229,8 +233,13 @@ public class MySQL implements DatabaseInterface {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < columns.size(); i++) {
             String column = columns.get(i);
-            builder.append(column).append((i == columns.size() - 1) ? "" : ", ");
+            if (builder.length() > 1) {
+                builder.append(", ");
+            }
+
+            builder.append(column);
         }
+
         try {
             Connection newConnection = openConnection();
             statement = newConnection.createStatement();
@@ -240,9 +249,7 @@ public class MySQL implements DatabaseInterface {
                 for (int i = 0; i < columns.size(); i++) {
                     String column = columns.get(i);
                     String valueColumn = resultSet.getString(column);
-                    if (valueColumn != null) {
-                        value.put(column, valueColumn);
-                    }
+                    value.put(column, valueColumn == null ? "" : valueColumn);
                 }
             }
         } catch (Exception e) {
@@ -324,7 +331,11 @@ public class MySQL implements DatabaseInterface {
         PreparedStatement statement = null;
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < columnsAndValues.size(); i++) {
-            builder.append("?").append((i == columnsAndValues.size() - 1) ? "" : ", ");
+            if (builder.length() > 1) {
+                builder.append(", ");
+            }
+
+            builder.append("?");
         }
 
         try {

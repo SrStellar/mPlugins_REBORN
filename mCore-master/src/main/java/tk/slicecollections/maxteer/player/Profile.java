@@ -9,6 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 import org.json.simple.parser.ParseException;
 import tk.slicecollections.maxteer.Core;
+import tk.slicecollections.maxteer.cash.CashManager;
 import tk.slicecollections.maxteer.database.cache.Data;
 import tk.slicecollections.maxteer.database.cache.PlayerCache;
 import tk.slicecollections.maxteer.database.cache.collections.*;
@@ -19,8 +20,6 @@ import tk.slicecollections.maxteer.database.cache.types.TheBridgeCache;
 import tk.slicecollections.maxteer.deliveries.DeliveryContainer;
 import tk.slicecollections.maxteer.game.Game;
 import tk.slicecollections.maxteer.game.GameTeam;
-import tk.slicecollections.maxteer.cash.CashManager;
-import tk.slicecollections.maxteer.hook.FriendsHook;
 import tk.slicecollections.maxteer.player.boosters.BoosterContainer;
 import tk.slicecollections.maxteer.player.hotbar.Hotbar;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
@@ -182,6 +181,10 @@ public class Profile {
         player.spigot().setCollidesWithEntities(true);
         for (PotionEffect pe : player.getActivePotionEffects()) {
             player.removePotionEffect(pe.getType());
+        }
+
+        if (this.hotbar != null) {
+            this.hotbar.apply(this);
         }
 
         if (!playingGame()) {

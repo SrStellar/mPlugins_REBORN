@@ -1,12 +1,12 @@
 package tk.slicecollections.maxteer.nms.interfaces;
 
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.libraries.holograms.api.Hologram;
 import tk.slicecollections.maxteer.libraries.holograms.api.HologramLine;
 import tk.slicecollections.maxteer.libraries.npclib.api.npc.NPCAnimation;

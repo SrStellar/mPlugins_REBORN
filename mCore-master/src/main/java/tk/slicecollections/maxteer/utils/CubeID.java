@@ -1,15 +1,14 @@
 package tk.slicecollections.maxteer.utils;
 
-import static java.lang.Integer.parseInt;
-
-import java.util.Iterator;
-import java.util.Random;
-
-import com.avaje.ebean.validation.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import java.util.Iterator;
+import java.util.Random;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Interface para criação de CuboId através de localizações do Bukkit.

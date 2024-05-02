@@ -1,0 +1,6 @@
+authors: [Maxteer, oJVzinn]
+name: ${project.artifactId}
+version: ${project.version}
+depend: [mCore]
+
+main: ${main}

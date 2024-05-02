@@ -20,7 +20,6 @@ import tk.slicecollections.maxteer.bungee.party.BungeePartyManager;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.ProxiedProfile;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.channels.Channel;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.collections.ProfileInfoContainer;
-import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.preferences.PreferenceEnum;
 import tk.slicecollections.maxteer.utils.StringUtils;
 

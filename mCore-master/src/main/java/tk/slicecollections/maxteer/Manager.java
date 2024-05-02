@@ -6,9 +6,6 @@ import tk.slicecollections.maxteer.player.role.Role;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.MethodAccessor;
 
-import java.lang.reflect.Array;
-import java.util.logging.Level;
-
 public class Manager {
 
   public static boolean BUNGEE;

@@ -2,7 +2,6 @@ package tk.slicecollections.maxteer.bungee.proxiedplayer.cache.channels.collecti
 
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.ProxiedCache;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.channels.Channel;
-import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.ProxiedContainer;
 
 public class ProfileInfoChannel extends Channel {
 

@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
 import tk.slicecollections.maxteer.achievements.Achievement;
 import tk.slicecollections.maxteer.libraries.menu.PagedPlayerMenu;
-import tk.slicecollections.maxteer.menus.profile.Achievements.MenuAchievementsList;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;

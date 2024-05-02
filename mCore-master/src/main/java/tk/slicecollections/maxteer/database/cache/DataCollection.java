@@ -34,7 +34,7 @@ public abstract class DataCollection implements DataCollectionsInterface {
 
     public void updateValue(Object object) {
         this.value = object;
-        if (isUpdateBungee) {
+        if (isUpdateBungee) { //Sincronização com o bungeecord através de plugin message
             ByteArrayDataOutput outputStream = ByteStreams.newDataOutput();
             outputStream.writeUTF("UPDATE_VALUE");
             outputStream.writeUTF(this.playerKey);

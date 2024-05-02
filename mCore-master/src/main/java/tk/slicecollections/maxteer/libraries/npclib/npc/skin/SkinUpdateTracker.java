@@ -1,20 +1,17 @@
 package tk.slicecollections.maxteer.libraries.npclib.npc.skin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import javax.annotation.Nullable;
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.google.common.base.Preconditions;
 import tk.slicecollections.maxteer.libraries.npclib.NPCLibrary;
 import tk.slicecollections.maxteer.libraries.npclib.api.npc.NPC;
 import tk.slicecollections.maxteer.utils.Utils;
+
+import javax.annotation.Nullable;
+import java.util.*;
 
 public class SkinUpdateTracker {
 

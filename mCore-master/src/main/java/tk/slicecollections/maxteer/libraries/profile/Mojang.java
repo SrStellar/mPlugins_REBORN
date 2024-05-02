@@ -1,14 +1,15 @@
 package tk.slicecollections.maxteer.libraries.profile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import com.google.common.base.Charsets;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import tk.slicecollections.maxteer.libraries.profile.api.MineToolsAPI;
 import tk.slicecollections.maxteer.libraries.profile.api.MojangAPI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Maxter

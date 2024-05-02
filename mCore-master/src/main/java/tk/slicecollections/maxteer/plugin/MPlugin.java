@@ -1,6 +1,5 @@
 package tk.slicecollections.maxteer.plugin;
 
-import java.io.File;
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import tk.slicecollections.maxteer.plugin.config.FileUtils;
@@ -9,6 +8,8 @@ import tk.slicecollections.maxteer.plugin.config.MWriter;
 import tk.slicecollections.maxteer.plugin.logger.MLogger;
 import tk.slicecollections.maxteer.reflection.Accessors;
 import tk.slicecollections.maxteer.reflection.acessors.FieldAccessor;
+
+import java.io.File;
 
 /**
  * @author Maxter

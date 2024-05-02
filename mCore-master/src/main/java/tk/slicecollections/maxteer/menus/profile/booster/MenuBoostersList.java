@@ -9,20 +9,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import tk.slicecollections.maxteer.Core;
-import tk.slicecollections.maxteer.achievements.Achievement;
-import tk.slicecollections.maxteer.achievements.types.SkyWarsAchievement;
 import tk.slicecollections.maxteer.boosters.BoosterNetwork;
 import tk.slicecollections.maxteer.boosters.BoosterType;
 import tk.slicecollections.maxteer.boosters.NetworkManager;
 import tk.slicecollections.maxteer.libraries.menu.PlayerMenu;
 import tk.slicecollections.maxteer.menus.MenuProfile;
-import tk.slicecollections.maxteer.menus.profile.Achievements.MenuAchievements;
 import tk.slicecollections.maxteer.player.Profile;
 import tk.slicecollections.maxteer.player.boosters.BoosterContainer;
 import tk.slicecollections.maxteer.utils.BukkitUtils;
 import tk.slicecollections.maxteer.utils.enums.EnumSound;
-
-import java.util.List;
 
 public class MenuBoostersList extends PlayerMenu {
 

@@ -1,18 +1,12 @@
 package tk.slicecollections.maxteer.libraries.npclib.npc.skin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import com.google.common.base.Preconditions;
 import tk.slicecollections.maxteer.libraries.npclib.NPCLibrary;
 import tk.slicecollections.maxteer.nms.NMS;
+
+import java.util.*;
 
 class TabListRemover {
 

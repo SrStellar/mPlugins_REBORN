@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import tk.slicecollections.maxteer.bungee.Bungee;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.ProxiedCache;
-import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.ProxiedContainer;
 
 @AllArgsConstructor
 @Getter

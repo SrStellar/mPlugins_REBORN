@@ -2,8 +2,6 @@ package tk.slicecollections.maxteer;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import lombok.Getter;
-import me.clip.placeholderapi.PlaceholderAPI;
-import me.clip.placeholderapi.PlaceholderAPIPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -38,7 +36,9 @@ import tk.slicecollections.maxteer.servers.ServerItem;
 import tk.slicecollections.maxteer.titles.TitleManager;
 import tk.slicecollections.maxteer.utils.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

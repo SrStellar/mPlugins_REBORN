@@ -1,5 +1,10 @@
 package tk.slicecollections.maxteer.plugin.config;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
+import tk.slicecollections.maxteer.plugin.MPlugin;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,10 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.libs.jline.internal.InputStreamReader;
-import tk.slicecollections.maxteer.plugin.MPlugin;
 
 /**
  * @author Maxter

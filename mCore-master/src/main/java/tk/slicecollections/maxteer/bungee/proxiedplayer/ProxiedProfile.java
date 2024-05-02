@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.ProxiedCache;
-import tk.slicecollections.maxteer.database.cache.PlayerCache;
 
 import java.util.Collection;
 import java.util.HashMap;

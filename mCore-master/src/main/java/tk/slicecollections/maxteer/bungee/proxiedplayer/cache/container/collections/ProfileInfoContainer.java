@@ -1,6 +1,5 @@
 package tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.collections;
 
-import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.json.simple.JSONObject;
 import tk.slicecollections.maxteer.bungee.proxiedplayer.cache.container.ProxiedContainer;
